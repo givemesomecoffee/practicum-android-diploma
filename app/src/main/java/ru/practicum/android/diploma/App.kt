@@ -4,6 +4,8 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import ru.practicum.android.diploma.core.di.CoreComponent
+import ru.practicum.android.diploma.core.di.FeatureComponent
 
 class App : Application() {
 
@@ -16,7 +18,10 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules()
+            modules(buildList {
+                addAll(CoreComponent.modules)
+                addAll(FeatureComponent.modules)
+            })
         }
     }
 }

@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -40,7 +41,7 @@ android {
 }
 
 dependencies {
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
