@@ -2,7 +2,9 @@ package ru.practicum.android.diploma.features.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ru.practicum.android.diploma.BuildConfig
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.practicum.android.diploma.R
 
 class RootActivity : AppCompatActivity() {
@@ -10,12 +12,11 @@ class RootActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_root)
 
-        // Пример использования access token для HeadHunter API
-        networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
-    }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
+        val navController = navHostFragment.navController
 
-    private fun networkRequestExample(accessToken: String) {
-        // ...
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.setupWithNavController(navController)
     }
-
 }
