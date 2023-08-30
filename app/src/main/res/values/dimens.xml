@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="offset_8dp">8dp</dimen>
-    <dimen name="offset_16dp">16dp</dimen>
-    <dimen name="size_4sp">4sp</dimen>
-    <dimen name="size_12sp">12sp</dimen>
-    <dimen name="size_22sp">22sp</dimen>
+    <item name="offset_4" type="dimen">4dp</item>
+    <item name="offset_8" type="dimen">8dp</item>
+    <item name="offset_12" type="dimen">12dp</item>
+    <item name="offset_16" type="dimen">16dp</item>
+    <item name="offset_20" type="dimen">20dp</item>
+    <item name="offset_24" type="dimen">24dp</item>
 </resources>
