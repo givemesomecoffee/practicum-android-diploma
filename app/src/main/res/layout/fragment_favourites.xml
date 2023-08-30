@@ -16,12 +16,12 @@
             android:id="@+id/top_bar_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/offset_16dp"
-            android:layout_marginTop="@dimen/offset_8dp"
-            android:layout_marginEnd="@dimen/offset_8dp"
-            android:layout_marginBottom="@dimen/offset_8dp"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginEnd="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8"
             android:gravity="top"
-            android:lineSpacingExtra="@dimen/size_4sp"
+            android:lineSpacingExtra="4sp"
             android:text="@string/favourites"
             android:textAppearance="@style/headline" />
     </Toolbar>
