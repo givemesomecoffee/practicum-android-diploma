@@ -17,15 +17,14 @@
             android:id="@+id/top_bar_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginEnd="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8"
             android:gravity="top"
             android:lineSpacingExtra="4sp"
             android:text="@string/team"
-            android:textAppearance="@style/headline"
-            android:translationY="-0.11sp" />
+            android:textAppearance="@style/headline" />
     </Toolbar>
 
     <LinearLayout
@@ -34,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/offset_16"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,21 +48,20 @@
                 android:id="@+id/worked_on_the_application"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="@dimen/offset_16"
+                android:layout_marginVertical="@dimen/offset_8"
                 android:gravity="top"
                 android:lineSpacingExtra="6sp"
                 android:text="@string/worked_on_the_application"
-                android:textAppearance="@style/work_on_the_application"
-                android:translationY="-0.25sp" />
+                android:textAppearance="@style/work_on_the_application" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/frame_84"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_24"
             android:orientation="vertical">
 
             <TextView
@@ -73,41 +71,37 @@
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
                 android:text="@string/first_developer"
-                android:textAppearance="@style/developer"
-                android:translationY="-0.12sp" />
+                android:textAppearance="@style/developer" />
 
             <TextView
                 android:id="@+id/second_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/offset_16"
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
                 android:text="@string/second_developer"
-                android:textAppearance="@style/developer"
-                android:translationY="-0.12sp" />
+                android:textAppearance="@style/developer" />
 
             <TextView
                 android:id="@+id/third_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/offset_16"
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
                 android:text="@string/third_developer"
-                android:textAppearance="@style/developer"
-                android:translationY="-0.12sp" />
+                android:textAppearance="@style/developer" />
 
             <TextView
                 android:id="@+id/fourth_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/offset_16"
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
                 android:text="@string/fourth_developer"
-                android:textAppearance="@style/developer"
-                android:translationY="-0.12sp" />
+                android:textAppearance="@style/developer" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
