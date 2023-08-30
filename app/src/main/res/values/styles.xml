@@ -11,4 +11,10 @@
         <item name="fontFamily">@font/ys_display_regular</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="headline" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/blackDayWhiteNight</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+    </style>
 </resources>
