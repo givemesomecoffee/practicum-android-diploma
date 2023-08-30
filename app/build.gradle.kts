@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -40,7 +41,7 @@ android {
 }
 
 dependencies {
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -49,4 +50,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("io.insert-koin:koin-android:3.3.0")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.5.3")
+    implementation ("androidx.fragment:fragment-ktx:1.5.6")
 }
