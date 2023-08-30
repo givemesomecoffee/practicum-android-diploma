@@ -3,4 +3,9 @@
     <string name="main">Главная</string>
     <string name="favourites">Избранное</string>
     <string name="team">Команда</string>
+    <string name="worked_on_the_application">Над приложением работали</string>
+    <string name="first_developer">Анна Архиповна Тестирование</string>
+    <string name="second_developer">Ольга Петровна Оценка</string>
+    <string name="third_developer">Вениамин Петрович Дизайн</string>
+    <string name="fourth_developer">Антон Андройдович</string>
 </resources>
