@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.filter.ui.screen
+package ru.practicum.android.diploma.features.filter.ui.screen.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -49,6 +49,32 @@ class SettingsFilterViewModel(
 
             SettingsFilterEvent.ResetFilter -> {
                 _state.applyChanges(getCachedFilterStateUseCase.invoke(), false)
+            }
+
+            SettingsFilterEvent.ResetWorkplace -> {
+                _state.applyChanges(
+                    _state.value?.first?.copy(
+                        location = null
+                    )
+                )
+            }
+
+            SettingsFilterEvent.ResetCountry -> {
+                val prevFilter =  _state.value?.first
+                _state.applyChanges(
+                    prevFilter?.copy(
+                        location = prevFilter.location?.copy(country = null)
+                    )
+                )
+            }
+
+            SettingsFilterEvent.ResetRegion -> {
+                val prevFilter =  _state.value?.first
+                _state.applyChanges(
+                    prevFilter?.copy(
+                        location = prevFilter.location?.copy(city = null)
+                    )
+                )
             }
         }
     }

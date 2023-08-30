@@ -5,4 +5,7 @@
     <string name="input_sum">Введите сумму</string>
     <string name="do_not_show_no_salary">Не показывать без ЗП</string>
     <string name="filter_settings">Настройки фильтрации</string>
+    <string name="workplace_choose">Выбор места работы</string>
+    <string name="filter_country">Страна</string>
+    <string name="filter_region">Регион</string>
 </resources>
