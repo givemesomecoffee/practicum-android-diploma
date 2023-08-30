@@ -3,4 +3,6 @@
     <string name="main">Главная</string>
     <string name="favourites">Избранное</string>
     <string name="team">Команда</string>
+    <string name="apply">Применить</string>
+    <string name="reset">Сбросить</string>
 </resources>

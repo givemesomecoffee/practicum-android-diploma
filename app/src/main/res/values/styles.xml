@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CustomNavigationView" >
+
+    <style name="CustomNavigationView">
         <item name="android:background">@color/whiteDayBlackNight</item>
         <item name="itemIconTint">@color/gray</item>
         <item name="itemTextColor">@color/gray</item>
@@ -10,5 +11,11 @@
     <style name="BottomNavigationText" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/ys_display_regular</item>
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextInputLayoutFilled" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="hintTextColor">@color/gray</item>
+        <item name="android:textColorHint">@color/gray</item>
     </style>
 </resources>

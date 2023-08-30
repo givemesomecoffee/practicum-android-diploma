@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/filter_settings"
+        app:titleTextAppearance="@style/Primary.Medium.22" />
+
+    <ru.practicum.android.diploma.features.filter.ui.view.TextWithHintAndIcon
+        android:id="@+id/settings_filter_workplace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cell_hint="@string/workplace"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_salary"
+        style="@style/Widget.AppTheme.TextInputLayoutFilled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="24dp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/awaited_salary"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:expandedHintEnabled="false"
+        app:hintEnabled="true"
+        app:layout_constraintTop_toBottomOf="@id/settings_filter_workplace"
+        app:placeholderText="@string/input_sum"
+        app:placeholderTextColor="@color/gray">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@id/et_salary">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="24dp"
+            android:layout_weight="1"
+            android:text="@string/do_not_show_no_salary"
+            android:textAppearance="@style/Primary.Regular.16" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/filter_exclude_no_salary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:buttonTint="@color/blue"
+            android:minWidth="0dp"
+            android:minHeight="0dp" />
+
+    </LinearLayout>
+
+    <ru.practicum.android.diploma.core.ui.button.CustomButton
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        app:custom_button_title="@string/apply"
+        app:custom_button_type="PRIMARY"
+        app:layout_constraintBottom_toTopOf="@id/btn_reset" />
+
+    <ru.practicum.android.diploma.core.ui.button.CustomButton
+        android:id="@+id/btn_reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp"
+        app:custom_button_title="@string/reset"
+        app:custom_button_type="GHOST"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
