@@ -1,116 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/whiteDayBlackNight"
-    >
+    android:background="@color/whiteDayBlackNight">
+
     <Toolbar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/top_bar_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textAppearance="@style/headline"
-            android:text="@string/team"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:lineSpacingExtra="4sp"
-            android:translationY="-0.11sp"
             android:gravity="top"
-            />
+            android:lineSpacingExtra="4sp"
+            android:text="@string/team"
+            android:textAppearance="@style/headline"
+            android:translationY="-0.11sp" />
     </Toolbar>
 
     <LinearLayout
         android:id="@+id/frame_86"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        >
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar">
+
         <LinearLayout
             android:id="@+id/frame_85"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/worked_on_the_application"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="8dp"
+                android:gravity="top"
+                android:lineSpacingExtra="6sp"
                 android:text="@string/worked_on_the_application"
                 android:textAppearance="@style/work_on_the_application"
-                android:lineSpacingExtra="6sp"
-                android:translationY="-0.25sp"
-                android:gravity="top"
-                />
+                android:translationY="-0.25sp" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/frame_84"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:layout_marginHorizontal="16dp"
-            android:orientation="vertical"
-            >
+            android:layout_marginTop="24dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/first_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="top"
+                android:lineSpacingExtra="3sp"
                 android:text="@string/first_developer"
                 android:textAppearance="@style/developer"
-                android:lineSpacingExtra="3sp"
-                android:translationY="-0.12sp"
-                android:gravity="top"
-                />
+                android:translationY="-0.12sp" />
+
             <TextView
                 android:id="@+id/second_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:gravity="top"
+                android:lineSpacingExtra="3sp"
                 android:text="@string/second_developer"
                 android:textAppearance="@style/developer"
-                android:lineSpacingExtra="3sp"
-                android:translationY="-0.12sp"
-                android:gravity="top"
-                />
+                android:translationY="-0.12sp" />
+
             <TextView
                 android:id="@+id/third_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:gravity="top"
+                android:lineSpacingExtra="3sp"
                 android:text="@string/third_developer"
                 android:textAppearance="@style/developer"
-                android:lineSpacingExtra="3sp"
-                android:translationY="-0.12sp"
-                android:gravity="top"
-                />
+                android:translationY="-0.12sp" />
+
             <TextView
                 android:id="@+id/fourth_developer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:gravity="top"
+                android:lineSpacingExtra="3sp"
                 android:text="@string/fourth_developer"
                 android:textAppearance="@style/developer"
-                android:lineSpacingExtra="3sp"
-                android:translationY="-0.12sp"
-                android:gravity="top"
-                />
+                android:translationY="-0.12sp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
