@@ -3,7 +3,7 @@
     android:id="@+id/root_custom_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="8dp"
-    android:paddingVertical="20dp"
+    android:paddingHorizontal="@dimen/offset_8"
+    android:paddingVertical="@dimen/offset_20"
     android:textAlignment="center"
     android:textAppearance="@style/Primary.Regular.16" />

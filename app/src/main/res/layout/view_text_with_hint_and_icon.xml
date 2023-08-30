@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingVertical="21dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="12dp">
+    android:paddingVertical="@dimen/offset_20"
+    android:paddingStart="@dimen/offset_16"
+    android:paddingEnd="@dimen/offset_12">
 
     <TextView
         android:id="@+id/label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/offset_8"
         android:layout_weight="1"
         android:textAppearance="@style/Primary.Regular.12"
         android:textColor="@color/gray"
@@ -27,7 +27,7 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/offset_8"
         android:layout_weight="1"
         android:textAppearance="@style/Primary.Regular.16"
         app:layout_constraintEnd_toStartOf="@id/right_icon"
@@ -37,8 +37,8 @@
 
     <ImageView
         android:id="@+id/right_icon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/label" />
