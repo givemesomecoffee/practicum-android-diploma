@@ -5,4 +5,9 @@
     <string name="team">Команда</string>
     <string name="job_search">Поиск вакансий</string>
     <string name="input_query">Введите запрос</string>
+    <string name="worked_on_the_application">Над приложением работали</string>
+    <string name="first_developer">givemesomecoffee</string>
+    <string name="second_developer">Mysteri027</string>
+    <string name="third_developer">kukidevs</string>
+    <string name="fourth_developer">vaiwork</string>
 </resources>
