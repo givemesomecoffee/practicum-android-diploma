@@ -9,4 +9,6 @@
     <color name="lightGray">#E6E8EB</color>
     <color name="gray">#AEAFB4</color>
     <color name="transparentGray">#1A1B2280</color>
+    <color name="grayDayWhiteNight">@color/gray</color>
+    <color name="lightgrayDayGrayNight">@color/lightGray</color>
 </resources>
