@@ -10,4 +10,5 @@
     <string name="second_developer">Mysteri027</string>
     <string name="third_developer">kukidevs</string>
     <string name="fourth_developer">vaiwork</string>
+    <string name="num_jobs_found">Найдено %1$d вакансий</string>
 </resources>
