@@ -2,4 +2,6 @@
 <resources>
     <color name="blackDayWhiteNight">@color/white</color>
     <color name="whiteDayBlackNight">@color/black</color>
+    <color name="grayDayWhiteNight">@color/white</color>
+    <color name="lightgrayDayGrayNight">@color/gray</color>
 </resources>
