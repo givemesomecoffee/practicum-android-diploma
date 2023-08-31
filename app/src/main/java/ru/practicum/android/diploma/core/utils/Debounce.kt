@@ -1,5 +1,4 @@
-package com.example.playlistmaker.util
-import android.util.Log
+package ru.practicum.android.diploma.core.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
