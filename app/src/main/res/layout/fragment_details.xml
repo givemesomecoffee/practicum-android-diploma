@@ -65,10 +65,11 @@
     <TextView
         android:id="@+id/details_vacancy_name"
         style="@style/Primary.Bold"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
         android:layout_marginTop="@dimen/offset_24"
+        android:layout_marginEnd="@dimen/offset_16"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/details_tools_bar"
@@ -77,10 +78,12 @@
     <TextView
         android:id="@+id/details_vacancy_salary"
         style="@style/Primary.Medium.22"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
         android:layout_marginTop="@dimen/offset_4"
+        android:layout_marginEnd="@dimen/offset_16"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/details_vacancy_name"
         tools:text="от 100 000 ₽" />
@@ -112,11 +115,13 @@
         <TextView
             android:id="@+id/details_vacancy_company_name"
             style="@style/Primary.Medium.22"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/offset_8"
             android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginEnd="@dimen/offset_16"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/details_vacancy_company_logo"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Еда" />
@@ -124,10 +129,12 @@
         <TextView
             android:id="@+id/details_vacancy_company_city"
             style="@style/Primary.Regular.16"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/offset_8"
+            android:layout_marginEnd="@dimen/offset_16"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/details_vacancy_company_logo"
             app:layout_constraintTop_toBottomOf="@id/details_vacancy_company_name"
             tools:text="Москва" />
@@ -137,10 +144,12 @@
     <TextView
         android:id="@+id/details_required_experience"
         style="@style/Primary.Medium.16"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
         android:layout_marginTop="@dimen/offset_24"
+        android:layout_marginEnd="@dimen/offset_16"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/details_vacancy_company"
         tools:text="Требуемый опыт" />
@@ -148,17 +157,19 @@
     <TextView
         android:id="@+id/details_required_experience_value"
         style="@style/Primary.Regular.16"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
         android:layout_marginTop="@dimen/offset_4"
+        android:layout_marginEnd="@dimen/offset_16"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/details_required_experience"
         tools:text="От 1 года до 3 лет" />
 
     <TextView
         style="@style/Primary.Regular.16"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
         android:layout_marginTop="@dimen/offset_4"
