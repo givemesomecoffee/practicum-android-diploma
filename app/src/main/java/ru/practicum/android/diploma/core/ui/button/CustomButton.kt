@@ -26,7 +26,7 @@ class CustomButton(context: Context, attributes: AttributeSet? = null) :
 
                     else -> {
                         setTextColor(resources.getColorCompat(R.color.white))
-                        setBackgroundResource(R.drawable.bg_rounded_corners_12)
+                        setBackgroundResource(R.drawable.bg_primary_button)
                     }
                 }
             }
