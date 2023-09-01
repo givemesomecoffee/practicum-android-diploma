@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteDayBlackNight">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_tools_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_4"
+        android:layout_marginTop="@dimen/offset_8"
+        android:layout_marginEnd="@dimen/offset_8"
+        android:layout_marginBottom="@dimen/offset_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/details_arrow_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_4"
+            android:padding="@dimen/offset_8"
+            android:src="@drawable/arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/details_title"
+            style="@style/Primary.Medium.22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/details_arrow_back"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Вакансия" />
+
+        <ImageView
+            android:id="@+id/details_favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_4"
+            android:padding="@dimen/offset_8"
+            android:src="@drawable/heart_unfilled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_4"
+            android:padding="@dimen/offset_8"
+            android:src="@drawable/share_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/details_favourite"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/details_vacancy_name"
+        style="@style/Primary.Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginTop="@dimen/offset_24"
+        android:layout_marginEnd="@dimen/offset_16"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_tools_bar"
+        tools:text="Android-разработчик" />
+
+    <TextView
+        android:id="@+id/details_vacancy_salary"
+        style="@style/Primary.Medium.22"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginTop="@dimen/offset_4"
+        android:layout_marginEnd="@dimen/offset_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_vacancy_name"
+        tools:text="от 100 000 ₽" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_vacancy_company"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginTop="@dimen/offset_24"
+        android:layout_marginEnd="@dimen/offset_16"
+        android:background="@drawable/rounded_vacancy_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_vacancy_salary">
+
+        <ImageView
+            android:id="@+id/details_vacancy_company_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:paddingTop="@dimen/offset_16"
+            android:paddingBottom="@dimen/offset_16"
+            android:src="@drawable/template_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/details_vacancy_company_name"
+            style="@style/Primary.Medium.22"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_8"
+            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginEnd="@dimen/offset_16"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/details_vacancy_company_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Еда" />
+
+        <TextView
+            android:id="@+id/details_vacancy_company_city"
+            style="@style/Primary.Regular.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_8"
+            android:layout_marginEnd="@dimen/offset_16"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/details_vacancy_company_logo"
+            app:layout_constraintTop_toBottomOf="@id/details_vacancy_company_name"
+            tools:text="Москва" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/details_required_experience"
+        style="@style/Primary.Medium.16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginTop="@dimen/offset_24"
+        android:layout_marginEnd="@dimen/offset_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_vacancy_company"
+        tools:text="Требуемый опыт" />
+
+    <TextView
+        android:id="@+id/details_required_experience_value"
+        style="@style/Primary.Regular.16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginTop="@dimen/offset_4"
+        android:layout_marginEnd="@dimen/offset_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_required_experience"
+        tools:text="От 1 года до 3 лет" />
+
+    <TextView
+        style="@style/Primary.Regular.16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginTop="@dimen/offset_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_required_experience_value"
+        tools:text="Полная занятость, Удаленная работа" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
