@@ -13,4 +13,6 @@
     <string name="num_jobs_found">Найдено %1$d вакансий</string>
     <string name="no_jobs_found">Таких вакансий нет</string>
     <string name="empty_list">Список пуст</string>
+    <string name="apply">Применить</string>
+    <string name="reset">Сбросить</string>
 </resources>

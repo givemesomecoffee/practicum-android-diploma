@@ -3,7 +3,7 @@ package ru.practicum.android.diploma.features.filter.domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Filter (
+data class Filter(
     val showNoSalaryItems: Boolean = true,
     val salary: Long? = null,
     val industry: String? = null,
@@ -13,5 +13,12 @@ data class Filter (
     class WorkLocation(
         val country: String?,
         val city: String?
-    )
+    ) {
+        override fun toString(): String {
+            return buildList {
+                add(country)
+                add(city)
+            }.joinToString(separator = ", ")
+        }
+    }
 }
