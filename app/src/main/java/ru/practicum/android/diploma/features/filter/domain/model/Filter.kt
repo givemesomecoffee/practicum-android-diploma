@@ -11,8 +11,8 @@ data class Filter(
 ) {
     @Serializable
     class WorkLocation(
-        val country: String?,
-        val city: String?
+        val country: Area?,
+        val city: Area?
     ) {
         override fun toString(): String {
             return buildList {
