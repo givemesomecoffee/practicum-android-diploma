@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="workplace">Место работы</string>
+    <string name="awaited_salary">Ожидаемая ЗП</string>
+    <string name="input_sum">Введите сумму</string>
+    <string name="do_not_show_no_salary">Не показывать без ЗП</string>
+    <string name="filter_settings">Настройки фильтрации</string>
+</resources>
