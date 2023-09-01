@@ -32,17 +32,15 @@ class SettingsFilterViewModel(
                 }
             }
 
-            //TODO:
-
             is SettingsFilterEvent.WorkPlaceFilter -> {
-               /* _state.applyChanges(
+                _state.applyChanges(
                     _state.value?.first?.copy(
                         location = Filter.WorkLocation(
                             event.country,
                             event.region
                         )
                     )
-                )*/
+                )
             }
 
             SettingsFilterEvent.ApplyChanges -> {
@@ -54,29 +52,7 @@ class SettingsFilterViewModel(
             }
 
             SettingsFilterEvent.ResetWorkplace -> {
-                _state.applyChanges(
-                    _state.value?.first?.copy(
-                        location = null
-                    )
-                )
-            }
-
-            SettingsFilterEvent.ResetCountry -> {
-                val prevFilter =  _state.value?.first
-                _state.applyChanges(
-                    prevFilter?.copy(
-                        location = prevFilter.location?.copy(country = null)
-                    )
-                )
-            }
-
-            SettingsFilterEvent.ResetRegion -> {
-                val prevFilter =  _state.value?.first
-                _state.applyChanges(
-                    prevFilter?.copy(
-                        location = prevFilter.location?.copy(city = null)
-                    )
-                )
+                _state.applyChanges(_state.value?.first?.copy(location = null))
             }
         }
     }

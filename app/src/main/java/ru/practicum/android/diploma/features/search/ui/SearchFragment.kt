@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.core.utils.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -14,13 +15,14 @@ import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
-    private companion object{
+    private companion object {
         const val SEARCH_DELAY = 2000L
     }
+
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModel<SearchViewModel>()
-    private lateinit var searchDebounce: (String)->Unit
+    private lateinit var searchDebounce: (String) -> Unit
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,7 +33,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchDebounce = debounce(SEARCH_DELAY, lifecycleScope, true){
+        searchDebounce = debounce(SEARCH_DELAY, lifecycleScope, true) {
             if (it.isNotEmpty()) viewModel.getJobs(it)
         }
         binding.crossSearchInput.setOnClickListener {
@@ -50,6 +52,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     changeUISearch(false)
                 }
             }
+        }
+        binding.filterButton.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionFragmentToFilterNavGraph())
         }
     }
 

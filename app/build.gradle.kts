@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
     kotlin("plugin.serialization")
+    id("androidx.navigation.safeargs")
+    id("kotlin-parcelize")
 }
 
 android {

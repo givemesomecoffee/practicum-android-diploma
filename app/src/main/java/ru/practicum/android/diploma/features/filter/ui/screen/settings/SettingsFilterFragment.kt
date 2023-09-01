@@ -5,21 +5,35 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.clearFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import org.koin.androidx.navigation.koinNavGraphViewModel
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.core.navigation.util.goToScreen
+import ru.practicum.android.diploma.core.utils.getParcelableCompat
 import ru.practicum.android.diploma.databinding.FragmentSettingsFilterBinding
-import ru.practicum.android.diploma.features.filter.FilterScreens
+import ru.practicum.android.diploma.features.filter.domain.model.Area
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.filter.ui.SettingsFilterEvent
+import ru.practicum.android.diploma.features.filter.ui.screen.workplace.WorkPlaceResult
 import ru.practicum.android.diploma.features.filter.ui.util.enablePopUp
 
 class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
 
-    private val viewModel : SettingsFilterViewModel by koinNavGraphViewModel(R.id.filter_nav_graph)
+    private val viewModel: SettingsFilterViewModel by koinNavGraphViewModel(R.id.filter_nav_graph)
     private val binding by viewBinding(FragmentSettingsFilterBinding::bind)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(WorkPlaceResult.requestKey) { requestKey, bundle ->
+            val country = bundle.getParcelableCompat<Area>(WorkPlaceResult.country)
+            val region = bundle.getParcelableCompat<Area>(WorkPlaceResult.region)
+            viewModel.onEvent(SettingsFilterEvent.WorkPlaceFilter(country, region))
+            clearFragmentResult(requestKey)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.state.observe(viewLifecycleOwner, ::updateView)
         super.onViewCreated(view, savedInstanceState)
@@ -38,9 +52,6 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
                 viewModel.onEvent(SettingsFilterEvent.ApplyChanges)
                 findNavController().popBackStack()
             }
-            settingsFilterWorkplace.setOnClickListener {
-                goToScreen(FilterScreens.Workplace.getScreen())
-            }
         }
     }
 
@@ -49,7 +60,7 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
             val filter = it.first
             val hasChanges = it.second
             binding.run {
-                settingsFilterWorkplace.setTitle(filter.location?.toString()){
+                settingsFilterWorkplace.setTitle(filter.location?.toString()) {
                     viewModel.onEvent(SettingsFilterEvent.ResetWorkplace)
                 }
                 if (etSalary.editText?.text.toString() != filter.salary.toString()) {
@@ -60,7 +71,19 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
                 }
                 btnReset.isVisible = hasChanges
                 btnConfirm.isVisible = hasChanges
+                settingsFilterWorkplace.setOnClickListener {
+                    goToWorkplaceFilter(filter.location)
+                }
             }
         }
+    }
+
+    private fun goToWorkplaceFilter(location: Filter.WorkLocation?) {
+        findNavController().navigate(
+            SettingsFilterFragmentDirections.actionSettingsFilterFragmentToWorkPlaceFragment(
+                location?.country,
+                location?.city
+            )
+        )
     }
 }
