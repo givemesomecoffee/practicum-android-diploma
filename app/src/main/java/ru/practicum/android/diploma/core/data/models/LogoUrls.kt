@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.details.domain.models
+package ru.practicum.android.diploma.core.data.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

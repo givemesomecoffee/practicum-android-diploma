@@ -1,9 +1,9 @@
-package ru.practicum.android.diploma.features.details.domain.models
+package ru.practicum.android.diploma.core.data.models
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProfessionalRole(
+data class Experience(
     val id: String,
     val name: String
 )
