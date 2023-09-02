@@ -19,6 +19,10 @@ import ru.practicum.android.diploma.features.filter.ui.model.AreaResult
 import ru.practicum.android.diploma.features.filter.ui.model.toAreaResult
 import ru.practicum.android.diploma.features.filter.ui.screen.workplace.WorkPlaceResult
 import ru.practicum.android.diploma.core.ui.toolbar.enablePopUp
+import ru.practicum.android.diploma.features.filter.domain.model.Industry
+import ru.practicum.android.diploma.features.filter.ui.model.IndustryResult
+import ru.practicum.android.diploma.features.filter.ui.model.toIndustryResult
+import ru.practicum.android.diploma.features.filter.ui.screen.industry.IndustryFilterResult
 
 class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
 
@@ -33,10 +37,14 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
             viewModel.onEvent(SettingsFilterEvent.WorkPlaceFilter(country, region))
             clearFragmentResult(requestKey)
         }
+        setFragmentResultListener(IndustryFilterResult.requestKey){ requestKey, bundle ->
+            val industry = bundle.getParcelableCompat<IndustryResult>(IndustryFilterResult.industry)
+            viewModel.onEvent(SettingsFilterEvent.IndustryFilter(industry))
+            clearFragmentResult(requestKey)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         viewModel.state.observe(viewLifecycleOwner, ::updateView)
         super.onViewCreated(view, savedInstanceState)
         binding.run {
@@ -65,6 +73,9 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
                 settingsFilterWorkplace.setTitle(filter.location?.toString()) {
                     viewModel.onEvent(SettingsFilterEvent.ResetWorkplace)
                 }
+                settingsFilterIndustry.setTitle(filter.industry?.name){
+                    viewModel.onEvent(SettingsFilterEvent.ResetIndustry)
+                }
                 if (etSalary.editText?.text.toString() != filter.salary.toString()) {
                     etSalary.editText?.setText(filter.salary?.toString().orEmpty())
                 }
@@ -76,6 +87,9 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
                 settingsFilterWorkplace.setOnClickListener {
                     goToWorkplaceFilter(filter.location)
                 }
+                settingsFilterIndustry.setOnClickListener {
+                    goToIndustryFilter(filter.industry)
+                }
             }
         }
     }
@@ -85,6 +99,14 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
             SettingsFilterFragmentDirections.actionSettingsFilterFragmentToWorkPlaceFragment(
                 location?.country?.toAreaResult(),
                 location?.city?.toAreaResult()
+            )
+        )
+    }
+
+    private fun goToIndustryFilter(industry: Industry?){
+        findNavController().navigate(
+            SettingsFilterFragmentDirections.actionSettingsFilterFragmentToIndustryFilterFragment(
+               industry?.toIndustryResult()
             )
         )
     }
