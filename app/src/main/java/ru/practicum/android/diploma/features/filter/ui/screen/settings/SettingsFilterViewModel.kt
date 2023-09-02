@@ -32,15 +32,17 @@ class SettingsFilterViewModel(
                 }
             }
 
+            //TODO:
+
             is SettingsFilterEvent.WorkPlaceFilter -> {
-                _state.applyChanges(
+               /* _state.applyChanges(
                     _state.value?.first?.copy(
                         location = Filter.WorkLocation(
                             event.country,
                             event.region
                         )
                     )
-                )
+                )*/
             }
 
             SettingsFilterEvent.ApplyChanges -> {

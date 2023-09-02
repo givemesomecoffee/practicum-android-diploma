@@ -10,9 +10,9 @@ data class Filter(
     val location: WorkLocation? = null
 ) {
     @Serializable
-    data class WorkLocation(
-        val country: String?,
-        val city: String?
+    class WorkLocation(
+        val country: Area?,
+        val city: Area?
     ) {
         override fun toString(): String {
             return buildList {
