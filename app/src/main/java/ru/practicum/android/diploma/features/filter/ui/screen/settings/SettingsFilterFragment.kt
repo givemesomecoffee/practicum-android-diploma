@@ -9,32 +9,34 @@ import androidx.fragment.app.clearFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import org.koin.androidx.navigation.koinNavGraphViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.utils.getParcelableCompat
 import ru.practicum.android.diploma.databinding.FragmentSettingsFilterBinding
-import ru.practicum.android.diploma.features.filter.domain.model.Area
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.filter.ui.SettingsFilterEvent
+import ru.practicum.android.diploma.features.filter.ui.model.AreaResult
+import ru.practicum.android.diploma.features.filter.ui.model.toAreaResult
 import ru.practicum.android.diploma.features.filter.ui.screen.workplace.WorkPlaceResult
-import ru.practicum.android.diploma.features.filter.ui.util.enablePopUp
+import ru.practicum.android.diploma.core.ui.toolbar.enablePopUp
 
 class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
 
-    private val viewModel: SettingsFilterViewModel by koinNavGraphViewModel(R.id.filter_nav_graph)
+    private val viewModel by viewModel<SettingsFilterViewModel>()
     private val binding by viewBinding(FragmentSettingsFilterBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(WorkPlaceResult.requestKey) { requestKey, bundle ->
-            val country = bundle.getParcelableCompat<Area>(WorkPlaceResult.country)
-            val region = bundle.getParcelableCompat<Area>(WorkPlaceResult.region)
+            val country = bundle.getParcelableCompat<AreaResult>(WorkPlaceResult.country)
+            val region = bundle.getParcelableCompat<AreaResult>(WorkPlaceResult.region)
             viewModel.onEvent(SettingsFilterEvent.WorkPlaceFilter(country, region))
             clearFragmentResult(requestKey)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         viewModel.state.observe(viewLifecycleOwner, ::updateView)
         super.onViewCreated(view, savedInstanceState)
         binding.run {
@@ -81,8 +83,8 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
     private fun goToWorkplaceFilter(location: Filter.WorkLocation?) {
         findNavController().navigate(
             SettingsFilterFragmentDirections.actionSettingsFilterFragmentToWorkPlaceFragment(
-                location?.country,
-                location?.city
+                location?.country?.toAreaResult(),
+                location?.city?.toAreaResult()
             )
         )
     }

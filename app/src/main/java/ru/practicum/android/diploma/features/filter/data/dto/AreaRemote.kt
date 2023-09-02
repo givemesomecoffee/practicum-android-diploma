@@ -16,7 +16,8 @@ data class AreaRemote(
         return Area(
             id = id,
             name = name,
-            parentId = parentId
+            parentId = parentId,
+            areas = areas?.map { it.toDomain() }
         )
     }
 }

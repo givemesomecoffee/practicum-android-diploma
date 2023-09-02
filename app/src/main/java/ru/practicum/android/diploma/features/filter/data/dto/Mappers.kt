@@ -12,7 +12,7 @@ fun Area.toLocal(): AreaLocal {
 }
 
 fun AreaLocal.toDomain(): Area {
-    return Area(id = id, name = name, parentId = parentId)
+    return Area(id = id, name = name, parentId = parentId, null)
 }
 
 fun Filter.toLocal(): FilterLocal {

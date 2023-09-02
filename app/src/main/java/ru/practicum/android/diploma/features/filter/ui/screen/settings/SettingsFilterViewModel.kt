@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.features.filter.domain.impl.GetCachedFilterS
 import ru.practicum.android.diploma.features.filter.domain.impl.SaveNewFilterUseCaseImpl
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.filter.ui.SettingsFilterEvent
+import ru.practicum.android.diploma.features.filter.ui.model.toDomain
 
 class SettingsFilterViewModel(
     private val getCachedFilterStateUseCase: GetCachedFilterStateUseCaseImpl,
@@ -36,8 +37,8 @@ class SettingsFilterViewModel(
                 _state.applyChanges(
                     _state.value?.first?.copy(
                         location = Filter.WorkLocation(
-                            event.country,
-                            event.region
+                            event.country?.toDomain(),
+                            event.region?.toDomain()
                         )
                     )
                 )

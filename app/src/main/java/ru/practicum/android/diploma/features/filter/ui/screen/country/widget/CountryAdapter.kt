@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.features.filter.domain.model.Area
+import ru.practicum.android.diploma.features.filter.ui.model.AreaResult
 
-class CountryAdapter(private val listener: ItemClickListener) : RecyclerView.Adapter<CountryViewHolder>() {
-    var countryList = listOf<Area>()
+class CountryAdapter(private val listener: ItemClickListener) :
+    RecyclerView.Adapter<CountryViewHolder>() {
+    var countryList = listOf<AreaResult>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cell_with_arrow, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_cell_with_arrow, parent, false)
         return CountryViewHolder(view)
     }
 
