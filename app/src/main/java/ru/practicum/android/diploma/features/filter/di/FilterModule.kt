@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.features.filter.domain.TrackFilterUseCase
 import ru.practicum.android.diploma.features.filter.domain.impl.GetCachedFilterStateUseCaseImpl
 import ru.practicum.android.diploma.features.filter.domain.impl.SaveNewFilterUseCaseImpl
 import ru.practicum.android.diploma.features.filter.domain.impl.TrackFilterUseCaseImpl
-import ru.practicum.android.diploma.features.filter.ui.screen.SettingsFilterViewModel
+import ru.practicum.android.diploma.features.filter.ui.screen.settings.SettingsFilterViewModel
 
 val filterModule = module {
     singleOf(::FilterRepositoryImpl).bind<FilterRepository>()

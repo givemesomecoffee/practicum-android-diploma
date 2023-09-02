@@ -17,12 +17,9 @@
         android:name="ru.practicum.android.diploma.features.search.ui.SearchFragment"
         android:label="SearchFragment">
         <action
-            android:id="@+id/action_searchFragment_to_settingsFilterFragment"
-            app:destination="@id/settingsFilterFragment" />
+            android:id="@+id/action_fragment_to_filter_nav_graph"
+            app:destination="@id/filter_nav_graph" />
     </fragment>
-    <fragment
-        android:id="@+id/settingsFilterFragment"
-        android:name="ru.practicum.android.diploma.features.filter.ui.screen.SettingsFilterFragment"
-        android:label="SettingsFilterFragment" />
+    <include app:graph="@navigation/filter_nav_graph" />
 
 </navigation>

@@ -6,5 +6,8 @@ sealed class SettingsFilterEvent {
     class WorkPlaceFilter(val country: String?, val region: String?) : SettingsFilterEvent()
     object ApplyChanges : SettingsFilterEvent()
     object ResetFilter : SettingsFilterEvent()
+    object ResetWorkplace: SettingsFilterEvent()
+    object ResetCountry: SettingsFilterEvent()
+    object ResetRegion: SettingsFilterEvent()
 
 }

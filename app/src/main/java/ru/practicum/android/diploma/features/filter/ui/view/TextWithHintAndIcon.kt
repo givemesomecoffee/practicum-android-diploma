@@ -28,7 +28,7 @@ class TextWithHintAndIcon(context: Context, attributes: AttributeSet? = null) :
         }
     }
 
-    fun setTitle(title: String?) {
+    fun setTitle(title: String?, onClear: (() -> Unit)) {
         if (title.isNullOrBlank()) {
             findViewById<TextView>(R.id.title)?.apply {
                 text = labelHint
@@ -50,7 +50,7 @@ class TextWithHintAndIcon(context: Context, attributes: AttributeSet? = null) :
             findViewById<ImageView>(R.id.right_icon)?.apply {
                 isClickable = true
                 setOnClickListener {
-                    setTitle(null)
+                    onClear()
                 }
             }
         }
