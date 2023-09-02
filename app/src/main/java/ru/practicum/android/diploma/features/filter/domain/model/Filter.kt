@@ -6,7 +6,7 @@ data class Filter(
     val industry: String? = null,
     val location: WorkLocation? = null
 ) {
-    class WorkLocation(
+    data class WorkLocation(
         val country: Area?,
         val city: Area?
     ) {
