@@ -32,10 +32,10 @@ class WorkPlaceFragment : Fragment(R.layout.fragment_workplace) {
     private fun updateView(state: Pair<Filter, Boolean>?) {
         state?.first?.let { filter ->
             binding.apply {
-                country.setTitle(filter.location?.country) {
+                country.setTitle(filter.location?.country?.name) {
                     viewModel.onEvent(SettingsFilterEvent.ResetCountry)
                 }
-                region.setTitle(filter.location?.city) {
+                region.setTitle(filter.location?.city?.name) {
                     viewModel.onEvent(SettingsFilterEvent.ResetRegion)
                 }
             }
