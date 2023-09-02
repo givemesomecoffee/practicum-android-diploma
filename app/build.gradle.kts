@@ -56,4 +56,5 @@ dependencies {
     implementation ("androidx.fragment:fragment-ktx:1.5.6")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.9")
+    implementation("io.insert-koin:koin-androidx-navigation:3.3.0")
 }

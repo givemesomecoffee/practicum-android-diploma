@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/filter_nav_graph"
+    app:startDestination="@id/settingsFilterFragment2">
+
+    <fragment
+        android:id="@+id/settingsFilterFragment2"
+        android:name="ru.practicum.android.diploma.features.filter.ui.screen.settings.SettingsFilterFragment"
+        android:label="SettingsFilterFragment" >
+        <action
+            android:id="@+id/action_settingsFilterFragment2_to_workPlaceFragment2"
+            app:destination="@id/workPlaceFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/workPlaceFragment2"
+        android:name="ru.practicum.android.diploma.features.filter.ui.screen.workplace.WorkPlaceFragment"
+        android:label="WorkPlaceFragment" />
+</navigation>
