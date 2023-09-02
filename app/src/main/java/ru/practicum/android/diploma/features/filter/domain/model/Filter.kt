@@ -10,7 +10,7 @@ data class Filter(
     val location: WorkLocation? = null
 ) {
     @Serializable
-    class WorkLocation(
+    data class WorkLocation(
         val country: Area?,
         val city: Area?
     ) {
