@@ -15,4 +15,7 @@
     <string name="empty_list">Список пуст</string>
     <string name="apply">Применить</string>
     <string name="reset">Сбросить</string>
+    <string name="error_403">Ошибка авторизации</string>
+    <string name="error_else">Произошла ошибка (%1$d)</string>
+    <string name="no_salary">ЗП не указана</string>
 </resources>

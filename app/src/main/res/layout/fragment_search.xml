@@ -108,6 +108,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchInput"
-        app:trackThickness="@dimen/offset_8"
+        app:trackThickness="@dimen/offset_4"
         android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

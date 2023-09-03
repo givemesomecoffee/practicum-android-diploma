@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Employment(
-    val id: String,
+    val id: String?,
     val name: String
 )

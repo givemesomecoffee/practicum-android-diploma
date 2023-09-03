@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LogoUrls(
     @SerialName("`240`")
-    val twoHundredAndForty: String,
+    val twoHundredAndForty: String? = null,
     @SerialName("`90`")
-    val ninety: String,
+    val ninety: String? = null,
     val original: String
 )
