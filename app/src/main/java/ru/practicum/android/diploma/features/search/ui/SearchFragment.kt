@@ -8,6 +8,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.core.utils.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -72,6 +73,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
             lastText = trimmedText
 
+        }
+        binding.filterButton.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionFragmentToFilterNavGraph())
         }
     }
 

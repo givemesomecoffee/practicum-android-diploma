@@ -18,4 +18,7 @@
     <string name="error_403">Ошибка авторизации</string>
     <string name="error_else">Произошла ошибка (%1$d)</string>
     <string name="no_salary">ЗП не указана</string>
+    <string name="choose">Выбрать</string>
+    <string name="something_went_wrong">Что-то пошло не так</string>
+    <string name="refresh">Обновить</string>
 </resources>

@@ -2,18 +2,34 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/filter_nav_graph"
-    app:startDestination="@id/settingsFilterFragment2">
+    app:startDestination="@id/settingsFilterFragment">
 
     <fragment
-        android:id="@+id/settingsFilterFragment2"
+        android:id="@+id/settingsFilterFragment"
         android:name="ru.practicum.android.diploma.features.filter.ui.screen.settings.SettingsFilterFragment"
         android:label="SettingsFilterFragment" >
         <action
-            android:id="@+id/action_settingsFilterFragment2_to_workPlaceFragment2"
-            app:destination="@id/workPlaceFragment2" />
+            android:id="@+id/action_settingsFilterFragment_to_workPlaceFragment"
+            app:destination="@id/workPlaceFragment" />
     </fragment>
     <fragment
-        android:id="@+id/workPlaceFragment2"
+        android:id="@+id/workPlaceFragment"
         android:name="ru.practicum.android.diploma.features.filter.ui.screen.workplace.WorkPlaceFragment"
-        android:label="WorkPlaceFragment" />
+        android:label="WorkPlaceFragment">
+        <argument
+            android:name="country"
+            app:argType="ru.practicum.android.diploma.features.filter.domain.model.Area"
+            app:nullable="true"/>
+        <argument
+            android:name="region"
+            app:argType="ru.practicum.android.diploma.features.filter.domain.model.Area"
+            app:nullable="true"/>
+        <action
+            android:id="@+id/action_workPlaceFragment_to_countryFilterFragment"
+            app:destination="@id/countryFilterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countryFilterFragment"
+        android:name="ru.practicum.android.diploma.features.filter.ui.screen.country.CountryFilterFragment"
+        android:label="CountryFilterFragment" />
 </navigation>
