@@ -8,4 +8,16 @@ data class Salary(
     val from: Int?,
     val gross: Boolean?,
     val to: Int?
-)
+) {
+    override fun toString(): String {
+        return if ((from != null) and (to != null)) {
+            "от $from до $to $currency"
+        } else if ((from != null) and (to == null)){
+            "от $from $currency"
+        } else if ((from == null) and (to != null)) {
+            "до $to $currency"
+        } else {
+            " $currency"
+        }
+    }
+}

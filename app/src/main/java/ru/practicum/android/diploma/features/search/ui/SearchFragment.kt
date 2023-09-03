@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.practicum.android.diploma.core.utils.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.data.models.Vacancy
+import ru.practicum.android.diploma.core.navigation.ActionScreen
+import ru.practicum.android.diploma.core.navigation.util.goToScreen
+import ru.practicum.android.diploma.core.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.features.details.ui.DetailsFragment
 import ru.practicum.android.diploma.features.search.data.dto.VacanciesState
 import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.features.search.presentation.VacanciesAdapter
@@ -45,7 +49,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = VacanciesAdapter {  }
+        adapter =
+            VacanciesAdapter { vacancyId ->
+                goToScreen(
+                    ActionScreen(
+                        R.id.action_searchFragment_to_detailsFragment,
+                        bundleOf(DetailsFragment.VACANCY_ID_ARG to vacancyId)
+                    )
+                )
+            }
         adapter.vacancies = vacancies
         binding.searchRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.searchRecycler.adapter = adapter
@@ -109,7 +121,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                         state.items.size
                     ) else getString(R.string.no_jobs_found)
                 )
-                if (state.items != null){
+                if (state.items != null) {
                     vacancies.clear()
                     vacancies.addAll(state.items)
                     adapter.notifyDataSetChanged()

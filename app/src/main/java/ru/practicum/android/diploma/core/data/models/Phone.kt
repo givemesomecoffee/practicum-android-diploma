@@ -8,4 +8,8 @@ data class Phone(
     val comment: String?,
     val country: String,
     val number: String
-)
+) {
+    override fun toString(): String {
+        return "+$country ($city) $number"
+    }
+}

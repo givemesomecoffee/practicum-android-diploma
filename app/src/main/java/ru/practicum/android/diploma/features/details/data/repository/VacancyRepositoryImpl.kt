@@ -11,10 +11,10 @@ class VacancyRepositoryImpl(
 ) : VacancyRepository {
     override suspend fun getVacancy(id: String): Flow<VacancyResponse> = flow {
         try {
-            val vacancyResponse = vacancyApi.getVacancy(id)
-            emit(vacancyResponse.apply { resultCount = 200 })
+            val response = vacancyApi.getVacancy(id)
+            emit(VacancyResponse( response.code(), response.body()))
         } catch (e: Throwable) {
-            emit(VacancyResponse().apply { resultCount = -1 })
+            emit(VacancyResponse(code = -1, vacancy = null))
         }
     }
 }

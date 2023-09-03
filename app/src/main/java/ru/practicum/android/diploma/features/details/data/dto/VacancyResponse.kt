@@ -1,8 +1,10 @@
 package ru.practicum.android.diploma.features.details.data.dto
 
+import kotlinx.serialization.Serializable
 import ru.practicum.android.diploma.core.data.models.Vacancy
 
+@Serializable
 data class VacancyResponse (
-    var resultCount: Int = 0,
-    val vacancy: Vacancy? = null
+    val code: Int? = null,
+    val vacancy: Vacancy?
 )
