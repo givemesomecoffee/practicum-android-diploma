@@ -18,7 +18,7 @@ import ru.practicum.android.diploma.core.data.network.interceptor.AuthIntercepto
 val dataModule = module {
     single {
         androidContext()
-            .getSharedPreferences("practicum_example_preferences", Context.MODE_PRIVATE)
+            .getSharedPreferences("job_finder", Context.MODE_PRIVATE)
     }
     single {
 

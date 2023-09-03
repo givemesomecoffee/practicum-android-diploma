@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.features.filter.domain.impl.GetCachedFilterS
 import ru.practicum.android.diploma.features.filter.domain.impl.SaveNewFilterUseCaseImpl
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.filter.ui.SettingsFilterEvent
+import ru.practicum.android.diploma.features.filter.ui.model.toDomain
 
 class SettingsFilterViewModel(
     private val getCachedFilterStateUseCase: GetCachedFilterStateUseCaseImpl,
@@ -32,17 +33,15 @@ class SettingsFilterViewModel(
                 }
             }
 
-            //TODO:
-
             is SettingsFilterEvent.WorkPlaceFilter -> {
-               /* _state.applyChanges(
+                _state.applyChanges(
                     _state.value?.first?.copy(
                         location = Filter.WorkLocation(
-                            event.country,
-                            event.region
+                            event.country?.toDomain(),
+                            event.region?.toDomain()
                         )
                     )
-                )*/
+                )
             }
 
             SettingsFilterEvent.ApplyChanges -> {
@@ -54,29 +53,7 @@ class SettingsFilterViewModel(
             }
 
             SettingsFilterEvent.ResetWorkplace -> {
-                _state.applyChanges(
-                    _state.value?.first?.copy(
-                        location = null
-                    )
-                )
-            }
-
-            SettingsFilterEvent.ResetCountry -> {
-                val prevFilter =  _state.value?.first
-                _state.applyChanges(
-                    prevFilter?.copy(
-                        location = prevFilter.location?.copy(country = null)
-                    )
-                )
-            }
-
-            SettingsFilterEvent.ResetRegion -> {
-                val prevFilter =  _state.value?.first
-                _state.applyChanges(
-                    prevFilter?.copy(
-                        location = prevFilter.location?.copy(city = null)
-                    )
-                )
+                _state.applyChanges(_state.value?.first?.copy(location = null))
             }
         }
     }
