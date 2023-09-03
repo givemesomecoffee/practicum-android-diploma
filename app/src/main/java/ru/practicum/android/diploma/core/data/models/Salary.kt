@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Salary(
-    val currency: String,
-    val from: Int,
-    val gross: Boolean,
-    val to: Int
+    val currency: String?,
+    val from: Int?,
+    val gross: Boolean?,
+    val to: Int?
 )

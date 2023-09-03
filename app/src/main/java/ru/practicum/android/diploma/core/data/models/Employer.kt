@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Employer(
-    val id: String,
+    val id: String? = null,
     @SerialName("logo_urls")
-    val logoUrls: LogoUrls,
+    val logoUrls: LogoUrls? = null,
     val name: String,
-    val url: String
+    val url: String? = null
 )
