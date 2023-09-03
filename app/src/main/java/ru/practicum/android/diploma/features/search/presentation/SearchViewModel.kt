@@ -4,22 +4,38 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.features.filter.domain.TrackFilterUseCase
+import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.search.data.dto.VacanciesState
 import ru.practicum.android.diploma.features.search.domain.VacanciesInteractor
 import ru.practicum.android.diploma.features.search.domain.models.APIQuery
 import ru.practicum.android.diploma.features.search.ui.SearchFragment
 
-class SearchViewModel(private val interactor: VacanciesInteractor) : ViewModel() {
+class SearchViewModel(
+    private val interactor: VacanciesInteractor,
+    private val filterUseCase: TrackFilterUseCase
+) : ViewModel() {
     private val _stateLiveData = MutableLiveData<VacanciesState>()
     val stateLiveData: LiveData<VacanciesState> get() = _stateLiveData
+    private val _filtersLiveData = MutableLiveData<Filter>()
+    val filtersLiveData: LiveData<Filter> get() = _filtersLiveData
     fun getJobs(query: String) {
         _stateLiveData.postValue(VacanciesState(SearchFragment.CODE_LOADING, null))
         viewModelScope.launch {
-            interactor.getVacancies(APIQuery(query, null)).collect{
+            interactor.getVacancies(APIQuery(query, filtersLiveData.value)).collect {
                 _stateLiveData.postValue(it)
             }
-//            TODO("Применить фильтры")
+        }
+    }
+
+    fun getFilters() {
+        viewModelScope.launch {
+            filterUseCase.invoke().collect {
+                _filtersLiveData.postValue(it)
+            }
+
         }
     }
 }

@@ -14,6 +14,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.data.models.Vacancy
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.features.details.ui.DetailsFragment
+import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.search.data.dto.VacanciesState
 import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.features.search.presentation.VacanciesAdapter
@@ -40,12 +42,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         viewModel.stateLiveData.observe(viewLifecycleOwner) {
             render(it)
         }
+        viewModel.filtersLiveData.observe(viewLifecycleOwner) {
+            renderFilter(it)
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = VacanciesAdapter {  }
+        adapter = VacanciesAdapter {}
         adapter.vacancies = vacancies
         binding.searchRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.searchRecycler.adapter = adapter
@@ -60,15 +65,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             if (trimmedText != lastText) {
                 searchDebounce(trimmedText.toString())
 
-                when {
-                    text.isNullOrEmpty() -> {
-                        changeUISearch(true)
-                    }
-
-                    else -> {
-                        changeUISearch(false)
-                    }
-                }
+                changeUISearch(text.isNullOrEmpty())
             }
             lastText = trimmedText
 
@@ -112,7 +109,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                         state.items.size
                     ) else getString(R.string.no_jobs_found)
                 )
-                if (state.items != null){
+                if (state.items != null) {
                     vacancies.clear()
                     vacancies.addAll(state.items)
                     adapter.notifyDataSetChanged()
@@ -139,6 +136,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
+    private fun renderFilter(filter: Filter) {
+        if (filter.salary != null
+            || filter.industry != null
+            || !filter.showNoSalaryItems
+            || filter.location != null
+        ) binding.filterButton.setImageResource(
+            R.drawable.filter_on
+        )
+    }
+
     private fun changeVisibilitiesResult(success: Boolean, message: String) {
         binding.searchLoading.visibility = View.GONE
         binding.jobsFoundLabel.visibility = View.VISIBLE
@@ -148,5 +155,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         } else {
             binding.searchRecycler.visibility = View.GONE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFilters()
+        changeUISearch(binding.searchInput.text.isNullOrEmpty())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
