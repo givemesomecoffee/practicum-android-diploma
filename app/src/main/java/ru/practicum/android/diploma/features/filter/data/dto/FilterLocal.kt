@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class FilterLocal(
     val showNoSalaryItems: Boolean = true,
     val salary: Long? = null,
-    val industry: String? = null,
+    val industry: IndustryLocal? = null,
     val location: WorkLocationLocal? = null
 ) {
     @Serializable

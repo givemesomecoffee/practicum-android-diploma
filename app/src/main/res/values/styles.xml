@@ -48,4 +48,18 @@
         <item name="android:indeterminateTint">@color/blue</item>
         <item name="android:indeterminateTintMode">src_in</item>
     </style>
+
+    <style name="Search" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/rounding_12</item>
+        <item name="android:backgroundTint">@color/lightgrayDayGrayNight</item>
+        <item name="android:drawableEnd">@drawable/search_icon</item>
+        <item name="android:drawableTint">@color/black</item>
+        <item name="android:hint">@string/input_query</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:padding">@dimen/offset_16</item>
+        <item name="android:textColorHint">@color/grayDayWhiteNight</item>
+        <item name="android:textAppearance">@style/Primary.Regular.16</item>
+    </style>
 </resources>

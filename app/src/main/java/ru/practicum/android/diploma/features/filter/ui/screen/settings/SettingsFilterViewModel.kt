@@ -55,6 +55,14 @@ class SettingsFilterViewModel(
             SettingsFilterEvent.ResetWorkplace -> {
                 _state.applyChanges(_state.value?.first?.copy(location = null))
             }
+
+            SettingsFilterEvent.ResetIndustry -> {
+                _state.applyChanges(_state.value?.first?.copy(industry = null))
+            }
+
+            is SettingsFilterEvent.IndustryFilter -> {
+                _state.applyChanges(_state.value?.first?.copy(industry = event.industry?.toDomain()))
+            }
         }
     }
 

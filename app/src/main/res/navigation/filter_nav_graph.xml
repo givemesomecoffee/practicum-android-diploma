@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_settingsFilterFragment_to_workPlaceFragment"
             app:destination="@id/workPlaceFragment" />
+        <action
+            android:id="@+id/action_settingsFilterFragment_to_industryFilterFragment"
+            app:destination="@id/industryFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/workPlaceFragment"
@@ -63,6 +66,20 @@
         <argument
             android:name="selected_region"
             app:argType="ru.practicum.android.diploma.features.filter.ui.model.AreaResult"
+            app:nullable="true"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/industryFilterFragment"
+        android:name="ru.practicum.android.diploma.features.filter.ui.screen.industry.IndustryFilterFragment"
+        android:label="IndustryFilterFragment" >
+        <argument
+            android:name="fullScreen"
+            app:argType="boolean"
+            android:defaultValue="true"/>
+        <argument
+            android:name="selected_industry"
+            app:argType="ru.practicum.android.diploma.features.filter.ui.model.IndustryResult"
             app:nullable="true"
             />
     </fragment>

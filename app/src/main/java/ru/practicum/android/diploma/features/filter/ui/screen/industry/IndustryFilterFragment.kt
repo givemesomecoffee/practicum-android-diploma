@@ -1,6 +1,7 @@
-package ru.practicum.android.diploma.features.filter.ui.screen.region
+package ru.practicum.android.diploma.features.filter.ui.screen.industry
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -15,34 +16,33 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.ui.lce.ContentState
 import ru.practicum.android.diploma.core.ui.toolbar.enablePopUp
 import ru.practicum.android.diploma.core.utils.debounce
-import ru.practicum.android.diploma.databinding.FragmentRegionFilterBinding
-import ru.practicum.android.diploma.features.filter.ui.screen.region.model.RegionUi
-import ru.practicum.android.diploma.features.filter.ui.screen.region.widget.RegionAdapter
-import ru.practicum.android.diploma.features.filter.ui.screen.region.widget.RegionClickListener
+import ru.practicum.android.diploma.databinding.FragmentIndustryFilterBinding
+import ru.practicum.android.diploma.features.filter.ui.screen.industry.widget.IndustryAdapter
+import ru.practicum.android.diploma.features.filter.ui.screen.industry.widget.IndustryClickListener
 
-class RegionFilterFragment : Fragment(R.layout.fragment_region_filter), RegionClickListener {
-    private val countryAdapter = RegionAdapter(this)
-    private val binding by viewBinding(FragmentRegionFilterBinding::bind)
-    private val viewModel by viewModel<RegionFilterViewModel>()
-    private val args: RegionFilterFragmentArgs by navArgs()
+class IndustryFilterFragment : Fragment(R.layout.fragment_industry_filter), IndustryClickListener {
+    private val countryAdapter = IndustryAdapter(this)
+    private val binding by viewBinding(FragmentIndustryFilterBinding::bind)
+    private val viewModel by viewModel<IndustryFilterViewModel>()
+    private val args: IndustryFilterFragmentArgs by navArgs()
     private lateinit var searchDebounce: (String) -> Unit
 
-    override fun onItemClick(region: RegionUi) {
-        viewModel.toggleSelection(region)
+    override fun onItemClick(industry: IndustryUi) {
+        viewModel.toggleSelection(industry)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         searchDebounce = debounce(SEARCH_DELAY, lifecycleScope, true) {
             viewModel.filter(it)
         }
-        viewModel.sync(args.countryId, args.selectedRegion)
+        viewModel.sync(args.selectedIndustry)
         super.onViewCreated(view, savedInstanceState)
         binding.run {
             enablePopUp(toolbar)
             refreshButton.setOnClickListener {
-                viewModel.sync(args.countryId, args.selectedRegion)
+                viewModel.sync(args.selectedIndustry)
             }
-            filterRegionList.adapter = countryAdapter
+            filterIndustryList.adapter = countryAdapter
             search.doOnTextChanged { text, start, before, count ->
                 searchDebounce(text.toString())
             }
@@ -51,29 +51,26 @@ class RegionFilterFragment : Fragment(R.layout.fragment_region_filter), RegionCl
 
     }
 
-    private fun updateState(state: ContentState<RegionFilterUiState>?) {
+    private fun updateState(state: ContentState<IndustryFilterUiState>?) {
+        Log.d("custom", state?.error?.stackTraceToString().toString())
         state?.let { uiState ->
             binding.run {
                 pb.isVisible = uiState.isLoading
                 search.isVisible = uiState.content != null
                 errorScreen.isVisible = uiState.error != null
                 confirm.isVisible = state.content?.hasChanges == true
-                emptyPlaceholder.isVisible = uiState.content?.regionList?.isEmpty() == true
+                emptyPlaceholder.isVisible = uiState.content?.industryList?.isEmpty() == true
                 confirm.setOnClickListener {
-                    setFragmentResult(RegionFilterResult.requestKey, Bundle().apply {
+                    setFragmentResult(IndustryFilterResult.requestKey, Bundle().apply {
                         putParcelable(
-                            RegionFilterResult.region,
-                            state.content?.selectedRegion?.region
-                        )
-                        putParcelable(
-                            RegionFilterResult.country,
-                            state.content?.selectedRegion?.country
+                            IndustryFilterResult.industry,
+                            state.content?.selectedIndustry
                         )
                     })
                     findNavController().popBackStack()
                 }
             }
-            countryAdapter.countryList = uiState.content?.regionList.orEmpty()
+            countryAdapter.countryList = uiState.content?.industryList.orEmpty()
             countryAdapter.notifyDataSetChanged()
 
         }

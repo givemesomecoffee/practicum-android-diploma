@@ -3,7 +3,7 @@ package ru.practicum.android.diploma.features.filter.domain.model
 data class Filter(
     val showNoSalaryItems: Boolean = true,
     val salary: Long? = null,
-    val industry: String? = null,
+    val industry: Industry? = null,
     val location: WorkLocation? = null
 ) {
     data class WorkLocation(

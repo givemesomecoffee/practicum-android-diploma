@@ -21,6 +21,13 @@
         app:cell_hint="@string/workplace"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+    <ru.practicum.android.diploma.features.filter.ui.view.TextWithHintAndIcon
+        android:id="@+id/settings_filter_industry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cell_hint="@string/industry"
+        app:layout_constraintTop_toBottomOf="@id/settings_filter_workplace" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_salary"
         style="@style/Widget.AppTheme.TextInputLayoutFilled"
@@ -38,7 +45,7 @@
         app:boxStrokeWidthFocused="0dp"
         app:expandedHintEnabled="false"
         app:hintEnabled="true"
-        app:layout_constraintTop_toBottomOf="@id/settings_filter_workplace"
+        app:layout_constraintTop_toBottomOf="@id/settings_filter_industry"
         app:placeholderText="@string/input_sum"
         app:placeholderTextColor="@color/gray">
 
