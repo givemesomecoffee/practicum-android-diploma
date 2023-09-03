@@ -18,6 +18,9 @@
     <string name="error_403">Ошибка авторизации</string>
     <string name="error_else">Произошла ошибка (%1$d)</string>
     <string name="no_salary">ЗП не указана</string>
+    <string name="no_internet">Отсутствует подключение к интернету</string>
+    <string name="salary_from">от %1$s</string>
+    <string name="salary_to">до %1$s</string>
     <string name="choose">Выбрать</string>
     <string name="something_went_wrong">Что-то пошло не так</string>
     <string name="refresh">Обновить</string>

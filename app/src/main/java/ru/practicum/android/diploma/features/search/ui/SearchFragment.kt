@@ -23,7 +23,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         private const val SEARCH_DELAY = 2000L
         const val CODE_LOADING = 0
         const val CODE_NO_INTERNET = -1
-        const val CODE_EMPTY = -2
     }
 
     private var _binding: FragmentSearchBinding? = null
@@ -124,6 +123,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 binding.jobsFoundLabel.visibility = View.GONE
                 binding.searchLoading.visibility = View.VISIBLE
                 binding.searchRecycler.visibility = View.GONE
+            }
+
+            CODE_NO_INTERNET -> {
+                changeVisibilitiesResult(false, getString(R.string.no_internet))
             }
 
             403 -> {
