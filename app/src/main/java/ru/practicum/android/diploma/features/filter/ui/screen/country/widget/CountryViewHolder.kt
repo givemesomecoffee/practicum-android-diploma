@@ -4,13 +4,13 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.features.filter.domain.model.Area
+import ru.practicum.android.diploma.features.filter.ui.model.AreaResult
 
 class CountryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val itemTitle = itemView.findViewById<TextView>(R.id.cell_title)
 
-    fun bind(model: Area, listener: ItemClickListener) {
+    fun bind(model: AreaResult, listener: ItemClickListener) {
         itemView.setOnClickListener {
             listener.onItemClick(model)
         }

@@ -11,17 +11,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.ui.lce.ContentState
 import ru.practicum.android.diploma.databinding.FragmentCountryFilterBinding
-import ru.practicum.android.diploma.features.filter.domain.model.Area
+import ru.practicum.android.diploma.features.filter.ui.model.AreaResult
 import ru.practicum.android.diploma.features.filter.ui.screen.country.widget.CountryAdapter
 import ru.practicum.android.diploma.features.filter.ui.screen.country.widget.ItemClickListener
-import ru.practicum.android.diploma.features.filter.ui.util.enablePopUp
+import ru.practicum.android.diploma.core.ui.toolbar.enablePopUp
 
 class CountryFilterFragment : Fragment(R.layout.fragment_country_filter), ItemClickListener {
 
     private val countryAdapter = CountryAdapter(this)
     private val binding by viewBinding(FragmentCountryFilterBinding::bind)
     private val viewModel by viewModel<CountryFilterViewModel>()
-    override fun onItemClick(area: Area) {
+    override fun onItemClick(area: AreaResult) {
         setFragmentResult(
             CountryFilterResult.requestKey,
             Bundle().apply {
@@ -44,7 +44,7 @@ class CountryFilterFragment : Fragment(R.layout.fragment_country_filter), ItemCl
         viewModel.state.observe(viewLifecycleOwner, ::updateState)
     }
 
-    private fun updateState(state: ContentState<List<Area>>?) {
+    private fun updateState(state: ContentState<List<AreaResult>>?) {
         state?.let { uiState ->
             binding.run {
                 pb.isVisible = uiState.isLoading

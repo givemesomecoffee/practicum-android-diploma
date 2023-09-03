@@ -15,7 +15,8 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.utils.getParcelableCompat
 import ru.practicum.android.diploma.databinding.FragmentWorkplaceBinding
 import ru.practicum.android.diploma.features.filter.ui.screen.country.CountryFilterResult
-import ru.practicum.android.diploma.features.filter.ui.util.enablePopUp
+import ru.practicum.android.diploma.features.filter.ui.screen.region.RegionFilterResult
+import ru.practicum.android.diploma.core.ui.toolbar.enablePopUp
 
 class WorkPlaceFragment : Fragment(R.layout.fragment_workplace) {
 
@@ -24,23 +25,28 @@ class WorkPlaceFragment : Fragment(R.layout.fragment_workplace) {
     private val args: WorkPlaceFragmentArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         viewModel.initState(args.country, args.region)
         setFragmentResultListener(CountryFilterResult.requestKey) { requestKey, bundle ->
             viewModel.updateCountry(bundle.getParcelableCompat(CountryFilterResult.country))
             clearFragmentResult(requestKey)
         }
+        setFragmentResultListener(RegionFilterResult.requestKey) { requestKey, bundle ->
+            viewModel.updateRegion(
+                region = bundle.getParcelableCompat(RegionFilterResult.region),
+                country = bundle.getParcelableCompat(RegionFilterResult.country)
+            )
+            clearFragmentResult(requestKey)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         viewModel.state.observe(viewLifecycleOwner, ::updateView)
         enablePopUp(binding.toolbar)
         binding.country.setOnClickListener {
             findNavController().navigate(WorkPlaceFragmentDirections.actionWorkPlaceFragmentToCountryFilterFragment())
-        }
-
-        binding.region.setOnClickListener {
-            // TODO:
         }
     }
 
@@ -55,14 +61,22 @@ class WorkPlaceFragment : Fragment(R.layout.fragment_workplace) {
                 }
                 confirm.isVisible = state.hasChanges
                 binding.confirm.setOnClickListener {
-                    val bundle = Bundle()
-                    bundle.putParcelable(WorkPlaceResult.country, state.country)
-                    bundle.putParcelable(WorkPlaceResult.region, state.region)
                     setFragmentResult(
                         WorkPlaceResult.requestKey,
-                        bundle
+                        Bundle().apply {
+                            putParcelable(WorkPlaceResult.country, state.country)
+                            putParcelable(WorkPlaceResult.region, state.region)
+                        }
                     )
                     findNavController().popBackStack()
+                }
+                binding.region.setOnClickListener {
+                    findNavController().navigate(
+                        WorkPlaceFragmentDirections.actionWorkPlaceFragmentToRegionFilterFragment(
+                            state.country?.id,
+                            state.region
+                        )
+                    )
                 }
             }
         }
