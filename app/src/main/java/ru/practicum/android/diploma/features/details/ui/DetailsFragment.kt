@@ -61,7 +61,7 @@ class DetailsFragment : Fragment() {
 
         binding.detailsVacancyName.text = vacancy.name
         binding.detailsVacancySalary.text =
-            (vacancy.salary ?: resources.getString(R.string.no_salary)).toString()
+            (vacancy.salary?.pretty(requireContext()) ?: resources.getString(R.string.no_salary)).toString()
         binding.detailsVacancyCompanyName.text = vacancy.employer.name
 
         if (vacancy.employer.logoUrls != null) {
