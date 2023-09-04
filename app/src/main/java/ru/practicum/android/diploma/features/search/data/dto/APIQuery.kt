@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.search.domain.models
+package ru.practicum.android.diploma.features.search.data.dto
 
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
 

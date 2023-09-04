@@ -1,13 +1,13 @@
 package ru.practicum.android.diploma.features.search.domain.impl
 
 import kotlinx.coroutines.flow.Flow
-import ru.practicum.android.diploma.features.search.data.dto.VacanciesState
+import ru.practicum.android.diploma.features.filter.domain.model.Filter
+import ru.practicum.android.diploma.features.search.domain.models.VacanciesState
 import ru.practicum.android.diploma.features.search.domain.VacanciesInteractor
 import ru.practicum.android.diploma.features.search.domain.api.SearchRepository
-import ru.practicum.android.diploma.features.search.domain.models.APIQuery
 
 class VacanciesInteractorImpl(private val repository: SearchRepository): VacanciesInteractor {
-    override fun getVacancies(query: APIQuery): Flow<VacanciesState> {
-        return repository.getVacancies(query)
+    override fun getVacancies(text: String, filter: Filter?): Flow<VacanciesState> {
+        return repository.getVacancies(text, filter)
     }
 }
