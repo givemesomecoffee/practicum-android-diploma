@@ -10,6 +10,7 @@ import ru.practicum.android.diploma.features.details.domain.GetVacancyUseCase
 class DetailsViewModel(
     private val getVacancyUseCase: GetVacancyUseCase
 ) : ViewModel() {
+
     private val _screenState = MutableLiveData<DetailsScreenState>()
     val screenState: LiveData<DetailsScreenState> = _screenState
 

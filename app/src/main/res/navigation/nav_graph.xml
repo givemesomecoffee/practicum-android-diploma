@@ -19,7 +19,14 @@
         <action
             android:id="@+id/action_fragment_to_filter_nav_graph"
             app:destination="@id/filter_nav_graph" />
+        <action
+            android:id="@+id/action_searchFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <include app:graph="@navigation/filter_nav_graph" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="ru.practicum.android.diploma.features.details.ui.DetailsFragment"
+        android:label="DetailsFragment" />
 
 </navigation>

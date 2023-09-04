@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
-import ru.practicum.android.diploma.core.utils.debounce
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.data.models.Vacancy
+import ru.practicum.android.diploma.core.navigation.ActionScreen
+import ru.practicum.android.diploma.core.navigation.util.goToScreen
+import ru.practicum.android.diploma.core.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.features.details.ui.DetailsFragment
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
@@ -25,6 +28,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         private const val SEARCH_DELAY = 2000L
         const val CODE_LOADING = 0
         const val CODE_NO_INTERNET = -1
+        const val CODE_EMPTY = -2
     }
 
     private var _binding: FragmentSearchBinding? = null
@@ -42,6 +46,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         viewModel.stateLiveData.observe(viewLifecycleOwner) {
             render(it)
         }
+
         viewModel.filtersLiveData.observe(viewLifecycleOwner) {
             renderFilter(it)
         }
@@ -50,7 +55,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = VacanciesAdapter {}
+        adapter =
+            VacanciesAdapter { vacancyId ->
+                goToScreen(
+                    ActionScreen(
+                        R.id.action_searchFragment_to_detailsFragment,
+                        bundleOf(DetailsFragment.VACANCY_ID_ARG to vacancyId)
+                    )
+                )
+            }
         adapter.vacancies = vacancies
         binding.searchRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.searchRecycler.adapter = adapter

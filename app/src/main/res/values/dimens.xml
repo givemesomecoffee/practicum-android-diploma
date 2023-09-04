@@ -8,6 +8,8 @@
     <item name="offset_16" type="dimen">16dp</item>
     <item name="offset_20" type="dimen">20dp</item>
     <item name="offset_24" type="dimen">24dp</item>
+    <item name="offset_32" type="dimen">32dp</item>
     <item name="offset_38" type="dimen">38dp</item>
     <item name="offset_48" type="dimen">48dp</item>
+    <dimen name="offset_17">17dp</dimen>
 </resources>

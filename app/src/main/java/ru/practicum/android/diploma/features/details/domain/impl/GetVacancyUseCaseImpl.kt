@@ -11,7 +11,7 @@ class GetVacancyUseCaseImpl(
 ) : GetVacancyUseCase {
     override suspend fun invoke(id: String): Flow<Pair<Vacancy?, Int>> = flow {
         vacancyRepository.getVacancy(id).collect { vacancyResponse ->
-            when(vacancyResponse.resultCount) {
+            when(vacancyResponse.code) {
                 200 -> vacancyResponse.vacancy?.let { emit(Pair(it, 200)) }
                 else -> emit(Pair(null, -1))
             }
