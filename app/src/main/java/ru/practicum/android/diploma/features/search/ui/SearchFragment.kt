@@ -152,7 +152,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         if (filter.salary != null
             || filter.industry != null
             || !filter.showNoSalaryItems
-            || filter.location != null
+            || filter.location?.city != null
+            || filter.location?.country != null
         ) binding.filterButton.setImageResource(
             R.drawable.filter_on
         )
