@@ -5,22 +5,28 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import ru.practicum.android.diploma.features.details.data.network.VacancyApi
 import ru.practicum.android.diploma.features.details.data.repository.VacancyRepositoryImpl
-import ru.practicum.android.diploma.features.details.domain.GetVacancyUseCase
-import ru.practicum.android.diploma.features.details.domain.VacancyRepository
+import ru.practicum.android.diploma.features.details.domain.usecases.GetVacancyUseCase
+import ru.practicum.android.diploma.features.details.domain.repository.VacancyRepository
 import ru.practicum.android.diploma.features.details.domain.impl.GetVacancyUseCaseImpl
+import ru.practicum.android.diploma.features.details.domain.impl.ShareVacancyUseCaseImpl
+import ru.practicum.android.diploma.features.details.domain.usecases.ShareVacancyUseCase
 import ru.practicum.android.diploma.features.details.presentation.DetailsViewModel
 
 val detailsModule = module {
     viewModel {
-        DetailsViewModel(getVacancyUseCase = get())
+        DetailsViewModel(getVacancyUseCase = get(), shareVacancyUseCase = get())
     }
 
     single<GetVacancyUseCase> {
         GetVacancyUseCaseImpl(vacancyRepository = get())
     }
 
+    single<ShareVacancyUseCase> {
+        ShareVacancyUseCaseImpl(vacancyRepository = get())
+    }
+
     single<VacancyRepository> {
-        VacancyRepositoryImpl(vacancyApi = get())
+        VacancyRepositoryImpl(vacancyApi = get(), context = get())
     }
 
     single<VacancyApi> {

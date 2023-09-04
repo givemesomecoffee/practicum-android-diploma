@@ -3,8 +3,8 @@ package ru.practicum.android.diploma.features.details.domain.impl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.core.data.models.Vacancy
-import ru.practicum.android.diploma.features.details.domain.GetVacancyUseCase
-import ru.practicum.android.diploma.features.details.domain.VacancyRepository
+import ru.practicum.android.diploma.features.details.domain.usecases.GetVacancyUseCase
+import ru.practicum.android.diploma.features.details.domain.repository.VacancyRepository
 
 class GetVacancyUseCaseImpl(
     private val vacancyRepository: VacancyRepository

@@ -26,4 +26,6 @@ data class Vacancy(
     val keySkills: List<KeySkill>? = null,
     @SerialName("professional_roles")
     val professionalRoles: List<ProfessionalRole>,
+    @SerialName("alternate_url")
+    val alternateUrl: String
 )

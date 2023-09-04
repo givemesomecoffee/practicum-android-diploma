@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.features.details.domain.GetVacancyUseCase
+import ru.practicum.android.diploma.features.details.domain.usecases.GetVacancyUseCase
+import ru.practicum.android.diploma.features.details.domain.usecases.ShareVacancyUseCase
 
 class DetailsViewModel(
-    private val getVacancyUseCase: GetVacancyUseCase
+    private val getVacancyUseCase: GetVacancyUseCase,
+    private val shareVacancyUseCase: ShareVacancyUseCase
 ) : ViewModel() {
 
     private val _screenState = MutableLiveData<DetailsScreenState>()
@@ -23,6 +25,12 @@ class DetailsViewModel(
                     _screenState.postValue(DetailsScreenState.Error)
                 }
             }
+        }
+    }
+
+    fun shareVacancy() {
+        if (screenState.value is DetailsScreenState.Filled) {
+            shareVacancyUseCase.invoke((screenState.value as DetailsScreenState.Filled).vacancy.alternateUrl)
         }
     }
 }
