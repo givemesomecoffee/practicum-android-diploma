@@ -6,18 +6,18 @@ import android.net.NetworkCapabilities
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
-import ru.practicum.android.diploma.features.search.data.dto.VacanciesState
+import ru.practicum.android.diploma.features.search.domain.models.VacanciesState
 import ru.practicum.android.diploma.features.search.domain.api.SearchRepository
-import ru.practicum.android.diploma.features.search.domain.models.APIQuery
+import ru.practicum.android.diploma.features.search.data.dto.APIQuery
 import ru.practicum.android.diploma.features.search.ui.SearchFragment
 
 class SearchRepositoryImpl(private val api: SearchAPI, private val context: Context) : SearchRepository {
-    override fun getVacancies(query: APIQuery): Flow<VacanciesState> = flow{
+    override fun getVacancies(text: String, filter: Filter?): Flow<VacanciesState> = flow{
         if (!isConnected()){
             emit(VacanciesState(SearchFragment.CODE_NO_INTERNET, null))
             return@flow
         }
-        val response = api.getVacancies(query.toMap())
+        val response = api.getVacancies(APIQuery(text, filter).toMap())
         emit(VacanciesState(response.code(), response.body()?.items))
     }
 

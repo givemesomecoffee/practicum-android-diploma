@@ -4,4 +4,4 @@ import kotlinx.serialization.Serializable
 import ru.practicum.android.diploma.core.data.models.Vacancy
 
 @Serializable
-data class VacanciesState(val code: Int? = null, val items: List<Vacancy>?)
+data class VacanciesResponse(val items: List<Vacancy>?)

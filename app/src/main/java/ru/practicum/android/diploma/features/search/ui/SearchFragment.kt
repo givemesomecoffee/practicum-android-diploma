@@ -19,7 +19,7 @@ import ru.practicum.android.diploma.core.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.features.details.ui.DetailsFragment
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
-import ru.practicum.android.diploma.features.search.data.dto.VacanciesState
+import ru.practicum.android.diploma.features.search.domain.models.VacanciesState
 import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.core.ui.vacancies.VacanciesAdapter
 
