@@ -18,8 +18,7 @@ class VacanciesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(vacancy: Vacancy) {
         name.text = vacancy.name
         employer.text = vacancy.employer.name
-        salary.text = vacancy.salary?.currency ?: itemView.context.getString(R.string.no_salary)
-//        TODO("Приделать отображение зарплаты")
+        salary.text = vacancy.salary?.pretty(itemView.context) ?: itemView.context.getString(R.string.no_salary)
         if (vacancy.employer.logoUrls != null)Glide.with(itemView.context)
             .load(
                 when{
@@ -27,6 +26,8 @@ class VacanciesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     else -> vacancy.employer.logoUrls.original
                 }
             )
+            .placeholder(R.drawable.offer_placeholder)
+            .error(R.drawable.offer_placeholder)
             .into(icon)
     }
 }

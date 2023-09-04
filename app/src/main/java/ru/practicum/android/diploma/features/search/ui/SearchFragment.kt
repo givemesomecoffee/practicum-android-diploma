@@ -12,10 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.data.models.Vacancy
-import ru.practicum.android.diploma.core.navigation.ActionScreen
-import ru.practicum.android.diploma.core.navigation.util.goToScreen
-import ru.practicum.android.diploma.core.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.features.details.ui.DetailsFragment
+import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.details.ui.DetailsFragment
 import ru.practicum.android.diploma.features.search.data.dto.VacanciesState
 import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
@@ -43,6 +42,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         viewModel.stateLiveData.observe(viewLifecycleOwner) {
             render(it)
+        }
+
+        viewModel.filtersLiveData.observe(viewLifecycleOwner) {
+            renderFilter(it)
         }
         return binding.root
     }
@@ -72,18 +75,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             if (trimmedText != lastText) {
                 searchDebounce(trimmedText.toString())
 
-                when {
-                    text.isNullOrEmpty() -> {
-                        changeUISearch(true)
-                    }
-
-                    else -> {
-                        changeUISearch(false)
-                    }
-                }
+                changeUISearch(text.isNullOrEmpty())
             }
             lastText = trimmedText
 
+        }
+        binding.filterButton.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionFragmentToFilterNavGraph())
         }
     }
 
@@ -134,6 +132,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 binding.searchRecycler.visibility = View.GONE
             }
 
+            CODE_NO_INTERNET -> {
+                changeVisibilitiesResult(false, getString(R.string.no_internet))
+            }
+
             403 -> {
                 changeVisibilitiesResult(false, getString(R.string.error_403))
             }
@@ -142,6 +144,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 changeVisibilitiesResult(false, getString(R.string.error_else, state.code))
             }
         }
+    }
+
+    private fun renderFilter(filter: Filter) {
+        if (filter.salary != null
+            || filter.industry != null
+            || !filter.showNoSalaryItems
+            || filter.location != null
+        ) binding.filterButton.setImageResource(
+            R.drawable.filter_on
+        )
     }
 
     private fun changeVisibilitiesResult(success: Boolean, message: String) {
@@ -153,5 +165,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         } else {
             binding.searchRecycler.visibility = View.GONE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFilters()
+        changeUISearch(binding.searchInput.text.isNullOrEmpty())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

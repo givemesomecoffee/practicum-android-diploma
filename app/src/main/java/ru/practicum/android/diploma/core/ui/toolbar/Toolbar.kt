@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.filter.ui.util
+package ru.practicum.android.diploma.core.ui.toolbar
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController

@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.features.search.di
 
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -12,10 +13,10 @@ import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
 
 val searchModule = module {
     viewModel {
-        SearchViewModel(get())
+        SearchViewModel(get(), get())
     }
     single<SearchRepository> {
-        SearchRepositoryImpl(get())
+        SearchRepositoryImpl(get(), androidContext())
     }
     single<VacanciesInteractor> {
         VacanciesInteractorImpl(get())

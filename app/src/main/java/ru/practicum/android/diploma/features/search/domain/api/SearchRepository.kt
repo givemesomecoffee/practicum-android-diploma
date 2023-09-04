@@ -6,4 +6,5 @@ import ru.practicum.android.diploma.features.search.domain.models.APIQuery
 
 interface SearchRepository {
     fun getVacancies(query: APIQuery): Flow<VacanciesState>
+    fun isConnected(): Boolean
 }

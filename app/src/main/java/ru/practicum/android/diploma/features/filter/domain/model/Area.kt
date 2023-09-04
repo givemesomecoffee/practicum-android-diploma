@@ -1,9 +1,13 @@
 package ru.practicum.android.diploma.features.filter.domain.model
 
-import kotlinx.serialization.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-@Serializable
-data class Area (
+@Parcelize
+data class Area(
     val id: String,
-    val name: String
-)
+    val name: String,
+    val parentId: String?,
+    val areas: List<Area>?
+) : Parcelable
+

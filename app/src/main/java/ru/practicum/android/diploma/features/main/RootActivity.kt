@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.navigation.DefaultArguments
 import ru.practicum.android.diploma.core.navigation.NavigationUiController
 import ru.practicum.android.diploma.databinding.ActivityRootBinding
 
@@ -19,8 +20,8 @@ class RootActivity : AppCompatActivity(R.layout.activity_root), NavigationUiCont
             supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { _, _, _ ->
-            hideBottomNavigation(false)
+        navController.addOnDestinationChangedListener { _, _, args ->
+            hideBottomNavigation(args?.getBoolean(DefaultArguments.FULL_SCREEN) ?: false)
         }
     }
 
