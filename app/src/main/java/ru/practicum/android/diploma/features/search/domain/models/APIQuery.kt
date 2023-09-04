@@ -10,8 +10,8 @@ data class APIQuery(val text: String, val filter: Filter?, val limit: Int = 50){
         if (filter!=null){
             map["only_with_salary"] = (!filter.showNoSalaryItems).toString()
             if(filter.salary != null) map["salary"] = filter.salary.toString()
-            if (filter.industry != null) map["industry"] = filter.industry
-            if (filter.location != null) map["area"] = filter.location.toString()
+            if (filter.industry != null) map["industry"] = filter.industry.id
+            if (filter.location?.city != null) map["area"] = filter.location.city.id
         }
         return map
     }
