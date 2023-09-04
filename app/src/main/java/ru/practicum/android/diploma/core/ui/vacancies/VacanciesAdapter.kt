@@ -1,11 +1,10 @@
-package ru.practicum.android.diploma.features.search.presentation
+package ru.practicum.android.diploma.core.ui.vacancies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.data.models.Vacancy
-import ru.practicum.android.diploma.features.search.ui.VacanciesViewHolder
 
 class VacanciesAdapter(private val onClickAction: (String) -> Unit) :
     RecyclerView.Adapter<VacanciesViewHolder>() {

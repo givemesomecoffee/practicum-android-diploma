@@ -21,7 +21,7 @@ import ru.practicum.android.diploma.features.details.ui.DetailsFragment
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.search.data.dto.VacanciesState
 import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
-import ru.practicum.android.diploma.features.search.presentation.VacanciesAdapter
+import ru.practicum.android.diploma.core.ui.vacancies.VacanciesAdapter
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
     companion object {
@@ -117,10 +117,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             200 -> {
                 changeVisibilitiesResult(
                     true,
-                    if (!state.items.isNullOrEmpty()) getString(
-                        R.string.num_jobs_found,
-                        state.items.size
-                    ) else getString(R.string.no_jobs_found)
+                    if (!state.items.isNullOrEmpty())
+                    getEnding(state.items.size)
+                     else getString(R.string.no_jobs_found)
                 )
                 if (state.items != null) {
                     vacancies.clear()
@@ -179,5 +178,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun getEnding(count: Int): String{
+        return when{
+            count in 11..14 -> getString(R.string.num_jobs_found_5_9, count)
+            count % 10 in 2..4 -> getString(R.string.num_jobs_found_2_4, count)
+            count % 10 == 1 -> getString(R.string.num_jobs_found_1, count)
+            else -> getString(R.string.num_jobs_found_5_9, count)
+        }
     }
 }
