@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.features.search.ui
+package ru.practicum.android.diploma.core.ui.vacancies
 
 import android.view.View
 import android.widget.ImageView
