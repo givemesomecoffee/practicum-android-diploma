@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -41,7 +42,12 @@ class DetailsFragment : Fragment() {
         val vacancyId = requireArguments().getString(VACANCY_ID_ARG) ?: ""
         viewModel.getVacancy(vacancyId)
 
+        initListeners()
+        initObservers()
 
+    }
+
+    private fun initObservers() {
         viewModel.screenState.observe(viewLifecycleOwner) { screeState ->
             when (screeState) {
                 is DetailsScreenState.Filled -> {
@@ -53,7 +59,16 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
+    }
 
+    private fun initListeners() {
+        binding.detailsArrowBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.detailsShare.setOnClickListener {
+            viewModel.shareVacancy()
+        }
     }
 
     private fun initUi(vacancy: Vacancy) {
@@ -99,7 +114,7 @@ class DetailsFragment : Fragment() {
             binding.detailsEmailValue.text = vacancy.contacts.email
             if (vacancy.contacts.phones.isNullOrEmpty()) {
                 binding.detailsPhoneNumberValue.text =
-                    vacancy.contacts.phones?.get(0).toString() ?: ""
+                    vacancy.contacts.phones?.get(0).toString()
                 binding.detailsPhoneCommentValue.text =
                     vacancy.contacts.phones?.get(0)?.comment ?: ""
             }
