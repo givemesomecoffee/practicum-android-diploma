@@ -60,16 +60,12 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
 
         onVacancyClickDebounce =
             debounce(CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false) { vacancy ->
-                /*
                 goToScreen(
                     ActionScreen(
                         R.id.action_favouritesFragment_to_detailsFragment,
                         bundleOf(DetailsFragment.VACANCY_ID_ARG to vacancy.id)
                     )
                 )
-                */
-                favoritesViewModel.deleteVacancyFromDB(vacancy)
-                favoritesViewModel.favoritesFragmentControl()
             }
 
         favoritesAdapter.setItemClickListener {
@@ -82,8 +78,6 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
                 is FavoriteFragmentState.Content -> showFavoriteVacancies(it.vacancies)
             }
         }
-
-        //favoritesViewModel.addVacancyToDB()
     }
 
     override fun onResume() {
