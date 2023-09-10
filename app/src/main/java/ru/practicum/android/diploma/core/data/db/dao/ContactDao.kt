@@ -17,6 +17,9 @@ interface ContactDao {
     @Query("SELECT * FROM contact_table WHERE id = :id")
     suspend fun select(id: Int): List<ContactEntity>
 
+    @Query("SELECT phones FROM contact_table WHERE id <> :id")
+    suspend fun selectPhoneIdsExceptContact(id: Int): List<String>
+
     @Query("SELECT id FROM contact_table WHERE email = :email AND name = :name AND phones = :phones")
     suspend fun select(email: String, name: String, phones: String): List<Int>
 

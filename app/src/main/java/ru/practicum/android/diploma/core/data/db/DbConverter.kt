@@ -37,6 +37,10 @@ class DbConverter {
         return Gson().fromJson(str, object : TypeToken<List<Int>>() {}.type)
     }
 
+    fun jsonListIntToStr(listInt: List<Int>): String {
+        return Gson().toJson(listInt, object : TypeToken<List<Int>>() {}.type)
+    }
+
     fun map(
         vacancy: Vacancy,
         salaryId: Int = -1,
@@ -67,8 +71,8 @@ class DbConverter {
             vacancy.description ?: "",
             employmentId,
             vacancy.id,
-            Gson().toJson(keySkillIds, object : TypeToken<List<Int>>() {}.type),
-            Gson().toJson(professionalRoleIds, object : TypeToken<List<Int>>() {}.type),
+            jsonListIntToStr(keySkillIds),
+            jsonListIntToStr(professionalRoleIds),
             vacancy.alternateUrl
         )
     }
@@ -153,20 +157,20 @@ class DbConverter {
         )
     }
 
-    fun map(contact: Contacts, phoneIds: List<Int>? = null, contactsId: Int = 0): ContactEntity {
+    fun map(contact: Contacts, phoneIds: List<Int> = emptyList(), contactsId: Int = 0): ContactEntity {
         return ContactEntity(
             contactsId,
             contact.email ?: "",
             contact.name ?: "",
-            Gson().toJson(phoneIds, object : TypeToken<List<Int>?>() {}.type)
+            jsonListIntToStr(phoneIds)
         )
     }
 
-    fun map(contactEntity: ContactEntity, phones: List<Phone>? = null): Contacts {
+    fun map(contactEntity: ContactEntity, phones: List<Phone> = emptyList()): Contacts {
         return Contacts(
             contactEntity.email.ifEmpty { null },
             contactEntity.name.ifEmpty { null },
-            phones
+            phones.ifEmpty { null }
         )
     }
 

@@ -18,6 +18,9 @@ interface EmployerDao {
     @Query("SELECT * FROM employer_table WHERE id = :id")
     suspend fun select(id: Int): List<EmployerEntity>
 
+    @Query("SELECT logoUrls FROM employer_table WHERE id <> :id")
+    suspend fun selectLogoUrlsIdsExceptEmployer(id: Int): List<Int>
+
     @Query("SELECT id FROM employer_table WHERE requestId = :requestId AND logoUrls = :logoUrls AND name = :name AND url = :url")
     suspend fun select(requestId: String, logoUrls: Int, name: String, url: String): List<Int>
 

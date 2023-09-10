@@ -9,4 +9,6 @@ interface FavoriteVacanciesInteractor {
 
     suspend fun insertIntoFavoriteVacancies(vacancies: List<Vacancy>)
 
+    suspend fun deleteFavoriteVacancies(vacancies: List<Vacancy>)
+
 }

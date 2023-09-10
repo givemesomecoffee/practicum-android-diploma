@@ -20,6 +20,7 @@ import ru.practicum.android.diploma.core.data.models.Area
 import ru.practicum.android.diploma.core.data.models.Employer
 import ru.practicum.android.diploma.core.data.models.Employment
 import ru.practicum.android.diploma.core.data.models.KeySkill
+import ru.practicum.android.diploma.core.data.models.Phone
 import ru.practicum.android.diploma.core.data.models.ProfessionalRole
 import ru.practicum.android.diploma.core.data.models.Vacancy
 import ru.practicum.android.diploma.features.favourites.domain.api.FavoriteVacanciesRepository
@@ -48,6 +49,7 @@ class FavoriteVacanciesRepositoryImpl(
                     appDatabase.scheduleDao().select(vacancyEntity.scheduleId)
                 val brandedTemplate: List<BrandedTemplateEntity> =
                     appDatabase.brandedTemplateDao().select(vacancyEntity.brandedTemplateId)
+
                 val contacts: List<ContactEntity> =
                     appDatabase.contactDao().select(vacancyEntity.contactsId)
                 var phones: List<PhoneEntity> = emptyList()
@@ -57,6 +59,7 @@ class FavoriteVacanciesRepositoryImpl(
                         phones += appDatabase.phoneDao().select(phoneId)
                     }
                 }
+
                 val employment: List<EmploymentEntity> =
                     appDatabase.employmentDao().select(vacancyEntity.employmentId)
                 val keySkillsIds: List<Int> =
@@ -136,7 +139,15 @@ class FavoriteVacanciesRepositoryImpl(
                     if (contacts.isEmpty()) {
                         null
                     } else {
-                        dbConverter.map(contacts[0], phones.map { obj -> dbConverter.map(obj) })
+                        dbConverter.map(contacts[0], if (phones.isNotEmpty()) {
+                            var resultPhones: List<Phone> = emptyList()
+                            for (phone in phones) {
+                                resultPhones += dbConverter.map(phone)
+                            }
+                            resultPhones
+                        } else {
+                            emptyList()
+                        })
                     },
                     if (employment.isEmpty()) {
                         Employment(null, "")
@@ -330,10 +341,10 @@ class FavoriteVacanciesRepositoryImpl(
                 vacancyBrandedTemplateId = vacancyBrandedTemplateIds[0]
             }
 
-            var vacancyPhoneIds: List<Int> = emptyList()
             var vacancyContactsId: Int = -1
-            var newPhoneIds: List<Int> = emptyList()
             var isContactsAddedEarlier = false
+            var vacancyPhoneIds: List<Int> = emptyList()
+            var newPhoneIds: List<Int> = emptyList()
             if (vacancy.contacts != null) {
                 if (vacancy.contacts.phones != null) {
                     for (phone in vacancy.contacts.phones) {
@@ -517,6 +528,314 @@ class FavoriteVacanciesRepositoryImpl(
                 for (professionalRole in newProfessionalRoles) {
                     appDatabase.professionalRoleDao().delete(professionalRole)
                 }
+            }
+        }
+    }
+
+    override suspend fun deleteFavoriteVacancies(vacancies: List<Vacancy>) {
+        for (vacancy in vacancies) {
+
+            var vacancySalaryIds: List<Int> = emptyList()
+            if (vacancy.salary != null) {
+                vacancySalaryIds = appDatabase.salaryDao().select(
+                    vacancy.salary.currency ?: "",
+                    vacancy.salary.from ?: -1,
+                    if (vacancy.salary.gross == null) { -1 } else { if (vacancy.salary.gross) {1} else {0} },
+                    vacancy.salary.to ?: -1
+                )
+            }
+
+            var vacancyAddressIds: List<Int> = emptyList()
+            if (vacancy.address != null) {
+                vacancyAddressIds = appDatabase.addressDao().select(
+                    vacancy.address.city ?: ""
+                )
+            }
+
+            var vacancyLogoUrlsIds: List<Int> = emptyList()
+            if (vacancy.employer.logoUrls != null) {
+                vacancyLogoUrlsIds = appDatabase.logoUrlsDao().select(
+                    vacancy.employer.logoUrls.twoHundredAndForty ?: "",
+                    vacancy.employer.logoUrls.ninety ?: "",
+                    vacancy.employer.logoUrls.original
+                )
+            }
+
+            var vacancyEmployerIds: List<Int> = emptyList()
+            vacancyEmployerIds = appDatabase.employerDao().select(
+                vacancy.employer.id ?: "",
+                if (vacancyLogoUrlsIds.isEmpty()) { -1 } else {vacancyLogoUrlsIds[0]},
+                vacancy.employer.name,
+                vacancy.employer.url ?: ""
+            )
+
+            var vacancyExperienceIds: List<Int> = emptyList()
+            if (vacancy.experience != null) {
+                vacancyExperienceIds = appDatabase.experienceDao().select(
+                    vacancy.experience.id,
+                    vacancy.experience.name
+                )
+            }
+
+            var vacancyAreaIds: List<Int> = emptyList()
+            vacancyAreaIds = appDatabase.areaDao().select(
+                vacancy.area.id,
+                vacancy.area.name,
+                vacancy.area.url
+            )
+
+            var vacancyScheduleIds: List<Int> = emptyList()
+            if (vacancy.schedule != null) {
+                vacancyScheduleIds = appDatabase.scheduleDao().select(
+                    vacancy.schedule.id ?: "",
+                    vacancy.schedule.name
+                )
+            }
+
+            var vacancyBrandedTemplateIds: List<Int> = emptyList()
+            if (vacancy.brandedTemplate != null) {
+                vacancyBrandedTemplateIds = appDatabase.brandedTemplateDao().select(
+                    vacancy.brandedTemplate.id,
+                    vacancy.brandedTemplate.name
+                )
+            }
+
+            var vacancyPhoneIds: List<Int> = emptyList()
+            var vacancyPhonesIds: List<Int> = emptyList()
+            var vacancyContactsIds: List<Int> = emptyList()
+            if (vacancy.contacts != null) {
+                if (vacancy.contacts.phones != null) {
+                    for (phone in vacancy.contacts.phones) {
+                        vacancyPhonesIds = appDatabase.phoneDao().select(
+                            phone.city,
+                            phone.comment ?: "",
+                            phone.country,
+                            phone.number
+                        )
+                        vacancyPhoneIds += vacancyPhonesIds
+                    }
+                }
+
+                vacancyContactsIds = appDatabase.contactDao().select(
+                    vacancy.contacts.email ?: "",
+                    vacancy.contacts.name ?: "",
+                    dbConverter.jsonListIntToStr(vacancyPhoneIds)
+                )
+            }
+
+            var vacancyEmploymentIds: List<Int> = emptyList()
+            vacancyEmploymentIds = appDatabase.employmentDao().select(
+                vacancy.employment.id ?: "",
+                vacancy.employment.name
+            )
+
+            var vacancyKeySkillsIds: List<Int> = emptyList()
+            var _vacancyKeySkillsIds: List<Int> = emptyList()
+            if (vacancy.keySkills != null) {
+                for (keySkill in vacancy.keySkills) {
+                    _vacancyKeySkillsIds = appDatabase.keySkillDao().select(
+                        keySkill.name
+                    )
+                    vacancyKeySkillsIds += _vacancyKeySkillsIds
+                }
+            }
+
+            var vacancyProfessionalRoleIds: List<Int> = emptyList()
+            var _vacancyProfessionalRoleIds: List<Int> = emptyList()
+            for (professionalRole in vacancy.professionalRoles) {
+                _vacancyProfessionalRoleIds =
+                    appDatabase.professionalRoleDao().select(
+                        professionalRole.id,
+                        professionalRole.name
+                    )
+                vacancyProfessionalRoleIds += _vacancyProfessionalRoleIds
+            }
+
+            val vacancyIds: List<Int> = appDatabase.vacancyDao().select(
+                vacancy.name,
+                if (vacancySalaryIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancySalaryIds[0]
+                },
+                if (vacancyAddressIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyAddressIds[0]
+                },
+                if (vacancyEmployerIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyEmployerIds[0]
+                },
+                if (vacancyExperienceIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyExperienceIds[0]
+                },
+                if (vacancyAreaIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyAreaIds[0]
+                },
+                if (vacancyScheduleIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyScheduleIds[0]
+                },
+                vacancy.brandedDescription ?: "",
+                if (vacancyBrandedTemplateIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyBrandedTemplateIds[0]
+                },
+                vacancy.code ?: "",
+                if (vacancyContactsIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyContactsIds[0]
+                },
+                vacancy.description ?: "",
+                if (vacancyEmploymentIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyEmploymentIds[0]
+                },
+                vacancy.id,
+                dbConverter.jsonListIntToStr(vacancyKeySkillsIds),
+                dbConverter.jsonListIntToStr(vacancyProfessionalRoleIds),
+                vacancy.alternateUrl
+            )
+            if (vacancyIds.isNotEmpty()) {
+
+                if (vacancySalaryIds.isNotEmpty()) {
+                    if (!appDatabase.vacancyDao().selectSalaryIdsExceptVacancy(vacancyIds[0])
+                            .contains(vacancySalaryIds[0])
+                    ) {
+                        appDatabase.salaryDao().delete(vacancySalaryIds[0])
+                    }
+                }
+
+                if (vacancyAddressIds.isNotEmpty()) {
+                    if (!appDatabase.vacancyDao().selectAddressIdsExceptVacancy(vacancyIds[0])
+                            .contains(vacancyAddressIds[0])
+                    ) {
+                        appDatabase.addressDao().delete(vacancyAddressIds[0])
+                    }
+                }
+
+                if (vacancyLogoUrlsIds.isNotEmpty()) {
+                    if (vacancyEmployerIds.isNotEmpty()) {
+                        if (!appDatabase.employerDao()
+                                .selectLogoUrlsIdsExceptEmployer(vacancyEmployerIds[0])
+                                .contains(vacancyLogoUrlsIds[0])
+                        ) {
+                            appDatabase.logoUrlsDao().delete(vacancyLogoUrlsIds[0])
+                        }
+                        if (!appDatabase.vacancyDao().selectEmployerIdsExceptVacancy(vacancyIds[0])
+                                .contains(vacancyEmployerIds[0])
+                        ) {
+                            appDatabase.employerDao().delete(vacancyEmployerIds[0])
+                        }
+                    }
+                }
+
+                if (vacancyExperienceIds.isNotEmpty()) {
+                    if (!appDatabase.vacancyDao().selectExperienceIdsExceptVacancy(vacancyIds[0])
+                            .contains(vacancyExperienceIds[0])
+                    ) {
+                        appDatabase.experienceDao().delete(vacancyExperienceIds[0])
+                    }
+                }
+
+                if (vacancyAreaIds.isNotEmpty()) {
+                    if (!appDatabase.vacancyDao().selectAreaIdsExceptVacancy(vacancyIds[0])
+                            .contains(vacancyAreaIds[0])
+                    ) {
+                        appDatabase.areaDao().delete(vacancyAreaIds[0])
+                    }
+                }
+
+                if (vacancyScheduleIds.isNotEmpty()) {
+                    if (!appDatabase.vacancyDao().selectScheduleIdsExceptVacancy(vacancyIds[0])
+                            .contains(vacancyScheduleIds[0])
+                    ) {
+                        appDatabase.scheduleDao().delete(vacancyScheduleIds[0])
+                    }
+                }
+
+                if (vacancyBrandedTemplateIds.isNotEmpty()) {
+                    if (!appDatabase.vacancyDao()
+                            .selectBrandedTemplateIdsExceptVacancy(vacancyIds[0])
+                            .contains(vacancyBrandedTemplateIds[0])
+                    ) {
+                        appDatabase.brandedTemplateDao().delete(vacancyBrandedTemplateIds[0])
+                    }
+                }
+
+                if (vacancyEmploymentIds.isNotEmpty()) {
+                    if (!appDatabase.vacancyDao().selectEmploymentIdsExceptVacancy(vacancyIds[0])
+                            .contains(vacancyEmploymentIds[0])
+                    ) {
+                        appDatabase.employmentDao().delete(vacancyEmploymentIds[0])
+                    }
+                }
+
+                if (vacancyContactsIds.isNotEmpty()) {
+                    if (vacancyPhoneIds.isNotEmpty()) {
+                        val _searchedPhones: List<List<Int>> = appDatabase.contactDao()
+                            .selectPhoneIdsExceptContact(vacancyContactsIds[0]).map { obj ->
+                                dbConverter.jsonStrToListStr(obj)
+                            }
+                        var searchedPhones: List<Int> = emptyList()
+                        for (_searchedPhone in _searchedPhones) {
+                            searchedPhones.plus(_searchedPhone)
+                        }
+                        searchedPhones = searchedPhones.distinct()
+                        for (phoneId in vacancyPhoneIds) {
+                            if (!searchedPhones.contains(phoneId)
+                            ) {
+                                appDatabase.phoneDao().delete(phoneId)
+                            }
+                        }
+                    }
+                    if (!appDatabase.vacancyDao().selectContactsIdsExceptVacancy(vacancyIds[0])
+                            .contains(vacancyContactsIds[0])
+                    ) {
+                        appDatabase.contactDao().delete(vacancyContactsIds[0])
+                    }
+                }
+
+                val _searchedKeySkills: List<List<Int>> = appDatabase.vacancyDao().selectKeySkillsIdsExceptVacancy(vacancyIds[0])
+                    .map { obj -> dbConverter.jsonStrToListStr(obj) }
+                var searchedKeySkills: List<Int> = emptyList()
+                for (_searchedKeySkill in _searchedKeySkills) {
+                    searchedKeySkills.plus(_searchedKeySkill)
+                }
+                searchedKeySkills = searchedKeySkills.distinct()
+                for (keySkillId in vacancyKeySkillsIds) {
+                    if (!searchedKeySkills.contains(keySkillId)
+                    ) {
+                        appDatabase.keySkillDao().delete(keySkillId)
+                    }
+                }
+
+
+                val _searchedProfessionalRoles: List<List<Int>> = appDatabase.vacancyDao().selectProfessionalRolesIdsExceptVacancy(vacancyIds[0])
+                    .map { obj -> dbConverter.jsonStrToListStr(obj) }
+                var searchedProfessionalRoles: List<Int> = emptyList()
+                for (_searchedProfessionalRole in _searchedProfessionalRoles) {
+                    searchedProfessionalRoles.plus(_searchedProfessionalRole)
+                }
+                searchedProfessionalRoles = searchedProfessionalRoles.distinct()
+                for (professionalRoleId in vacancyProfessionalRoleIds) {
+                    if (!searchedProfessionalRoles.contains(professionalRoleId)
+                    ) {
+                        appDatabase.professionalRoleDao().delete(professionalRoleId)
+                    }
+                }
+
+                appDatabase.vacancyDao().delete(vacancyIds[0])
             }
         }
     }

@@ -16,4 +16,8 @@ class FavoriteVacanciesInteractorImpl(
         return favoriteVacanciesRepository.insertIntoFavoriteVacancies(vacancies)
     }
 
+    override suspend fun deleteFavoriteVacancies(vacancies: List<Vacancy>) {
+        return favoriteVacanciesRepository.deleteFavoriteVacancies(vacancies)
+    }
+
 }
