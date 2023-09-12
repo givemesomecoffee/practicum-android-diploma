@@ -29,8 +29,12 @@ class FavoriteVacanciesRepositoryImpl(
     private val appDatabase: AppDatabase,
     private val dbConverter: DbConverter,
 ) : FavoriteVacanciesRepository {
-    override fun getFavoriteVacancies(): Flow<List<Vacancy>> = flow {
-        val vacancyEntities: List<VacancyEntity> = appDatabase.vacancyDao().select()
+    override fun getFavoriteVacancies(requestId: String): Flow<List<Vacancy>> = flow {
+        val vacancyEntities: List<VacancyEntity> = if (requestId != "") {
+            appDatabase.vacancyDao().select()
+        } else {
+            appDatabase.vacancyDao().select(requestId)
+        }
         if (vacancyEntities.isEmpty()) {
             emit(emptyList())
         } else {
@@ -49,7 +53,6 @@ class FavoriteVacanciesRepositoryImpl(
                     appDatabase.scheduleDao().select(vacancyEntity.scheduleId)
                 val brandedTemplate: List<BrandedTemplateEntity> =
                     appDatabase.brandedTemplateDao().select(vacancyEntity.brandedTemplateId)
-
                 val contacts: List<ContactEntity> =
                     appDatabase.contactDao().select(vacancyEntity.contactsId)
                 var phones: List<PhoneEntity> = emptyList()
@@ -59,7 +62,6 @@ class FavoriteVacanciesRepositoryImpl(
                         phones += appDatabase.phoneDao().select(phoneId)
                     }
                 }
-
                 val employment: List<EmploymentEntity> =
                     appDatabase.employmentDao().select(vacancyEntity.employmentId)
                 val keySkillsIds: List<Int> =
@@ -139,15 +141,17 @@ class FavoriteVacanciesRepositoryImpl(
                     if (contacts.isEmpty()) {
                         null
                     } else {
-                        dbConverter.map(contacts[0], if (phones.isNotEmpty()) {
-                            var resultPhones: List<Phone> = emptyList()
-                            for (phone in phones) {
-                                resultPhones += dbConverter.map(phone)
+                        dbConverter.map(
+                            contacts[0], if (phones.isNotEmpty()) {
+                                var resultPhones: List<Phone> = emptyList()
+                                for (phone in phones) {
+                                    resultPhones += dbConverter.map(phone)
+                                }
+                                resultPhones
+                            } else {
+                                emptyList()
                             }
-                            resultPhones
-                        } else {
-                            emptyList()
-                        })
+                        )
                     },
                     if (employment.isEmpty()) {
                         Employment(null, "")
@@ -540,7 +544,15 @@ class FavoriteVacanciesRepositoryImpl(
                 vacancySalaryIds = appDatabase.salaryDao().select(
                     vacancy.salary.currency ?: "",
                     vacancy.salary.from ?: -1,
-                    if (vacancy.salary.gross == null) { -1 } else { if (vacancy.salary.gross) {1} else {0} },
+                    if (vacancy.salary.gross == null) {
+                        -1
+                    } else {
+                        if (vacancy.salary.gross) {
+                            1
+                        } else {
+                            0
+                        }
+                    },
                     vacancy.salary.to ?: -1
                 )
             }
@@ -564,7 +576,11 @@ class FavoriteVacanciesRepositoryImpl(
             var vacancyEmployerIds: List<Int> = emptyList()
             vacancyEmployerIds = appDatabase.employerDao().select(
                 vacancy.employer.id ?: "",
-                if (vacancyLogoUrlsIds.isEmpty()) { -1 } else {vacancyLogoUrlsIds[0]},
+                if (vacancyLogoUrlsIds.isEmpty()) {
+                    -1
+                } else {
+                    vacancyLogoUrlsIds[0]
+                },
                 vacancy.employer.name,
                 vacancy.employer.url ?: ""
             )
@@ -806,8 +822,9 @@ class FavoriteVacanciesRepositoryImpl(
                     }
                 }
 
-                val _searchedKeySkills: List<List<Int>> = appDatabase.vacancyDao().selectKeySkillsIdsExceptVacancy(vacancyIds[0])
-                    .map { obj -> dbConverter.jsonStrToListStr(obj) }
+                val _searchedKeySkills: List<List<Int>> =
+                    appDatabase.vacancyDao().selectKeySkillsIdsExceptVacancy(vacancyIds[0])
+                        .map { obj -> dbConverter.jsonStrToListStr(obj) }
                 var searchedKeySkills: List<Int> = emptyList()
                 for (_searchedKeySkill in _searchedKeySkills) {
                     searchedKeySkills.plus(_searchedKeySkill)
@@ -821,8 +838,9 @@ class FavoriteVacanciesRepositoryImpl(
                 }
 
 
-                val _searchedProfessionalRoles: List<List<Int>> = appDatabase.vacancyDao().selectProfessionalRolesIdsExceptVacancy(vacancyIds[0])
-                    .map { obj -> dbConverter.jsonStrToListStr(obj) }
+                val _searchedProfessionalRoles: List<List<Int>> =
+                    appDatabase.vacancyDao().selectProfessionalRolesIdsExceptVacancy(vacancyIds[0])
+                        .map { obj -> dbConverter.jsonStrToListStr(obj) }
                 var searchedProfessionalRoles: List<Int> = emptyList()
                 for (_searchedProfessionalRole in _searchedProfessionalRoles) {
                     searchedProfessionalRoles.plus(_searchedProfessionalRole)
@@ -838,5 +856,10 @@ class FavoriteVacanciesRepositoryImpl(
                 appDatabase.vacancyDao().delete(vacancyIds[0])
             }
         }
+    }
+
+    override suspend fun isVacancyFavorite(requestId: String): Boolean {
+        val vacancyEntities: List<VacancyEntity> = appDatabase.vacancyDao().select(requestId)
+        return vacancyEntities.isNotEmpty()
     }
 }

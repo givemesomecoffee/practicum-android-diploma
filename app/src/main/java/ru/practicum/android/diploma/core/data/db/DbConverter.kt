@@ -157,7 +157,11 @@ class DbConverter {
         )
     }
 
-    fun map(contact: Contacts, phoneIds: List<Int> = emptyList(), contactsId: Int = 0): ContactEntity {
+    fun map(
+        contact: Contacts,
+        phoneIds: List<Int> = emptyList(),
+        contactsId: Int = 0
+    ): ContactEntity {
         return ContactEntity(
             contactsId,
             contact.email ?: "",
