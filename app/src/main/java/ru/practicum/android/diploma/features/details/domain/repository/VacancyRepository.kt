@@ -5,5 +5,4 @@ import ru.practicum.android.diploma.features.details.data.dto.VacancyResponse
 
 interface VacancyRepository {
     suspend fun getVacancy(id: String): Flow<VacancyResponse>
-    fun shareVacancy(shareLink: String)
 }

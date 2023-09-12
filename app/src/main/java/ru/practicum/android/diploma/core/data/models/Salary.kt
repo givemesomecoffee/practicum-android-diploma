@@ -1,8 +1,6 @@
 package ru.practicum.android.diploma.core.data.models
 
-import android.content.Context
 import kotlinx.serialization.Serializable
-import ru.practicum.android.diploma.R
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -13,18 +11,18 @@ data class Salary(
     val gross: Boolean?,
     val to: Int?
 ) {
-    fun pretty(context: Context): String {
+    fun pretty(): String {
         var prettyString = ""
         if (from != null) {
-            prettyString += context.getString(R.string.salary_from, prettifyInt(from)) + " "
+            prettyString += "от $from "
         }
         if (to != null) {
-            prettyString += context.getString(R.string.salary_to, prettifyInt(to)) + " "
+            prettyString += "до $to"
         }
         if (prettyString != "") {
             prettyString += getCurrencySymbol()
         } else {
-            prettyString = context.getString(R.string.no_salary)
+            prettyString = "ЗП не указана"
         }
         return prettyString
     }
@@ -36,16 +34,16 @@ data class Salary(
 
     fun getCurrencySymbol(): String {
         return when (currency) {
-            "RUR"->"₽"
-            "RUB"->"₽"
-            "USD"->"$"
-            "EUR"->"€"
-            "KZT"->"₸"
-            "UAH"->"₴"
-            "AZN"->"₼"
-            "UZS"->"сўм"
-            "GEL"->"₾"
-            else -> currency?:""
+            "RUR" -> "₽"
+            "RUB" -> "₽"
+            "USD" -> "$"
+            "EUR" -> "€"
+            "KZT" -> "₸"
+            "UAH" -> "₴"
+            "AZN" -> "₼"
+            "UZS" -> "сўм"
+            "GEL" -> "₾"
+            else -> currency ?: ""
         }
 
     }
