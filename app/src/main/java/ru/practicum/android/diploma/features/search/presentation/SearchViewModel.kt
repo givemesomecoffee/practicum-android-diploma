@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.core.data.models.Vacancy
 import ru.practicum.android.diploma.features.filter.domain.TrackFilterUseCase
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
-import ru.practicum.android.diploma.features.search.domain.models.VacanciesState
 import ru.practicum.android.diploma.features.search.domain.VacanciesInteractor
-import ru.practicum.android.diploma.features.search.data.dto.APIQuery
+import ru.practicum.android.diploma.features.search.domain.models.VacanciesState
 import ru.practicum.android.diploma.features.search.ui.SearchFragment
 
 class SearchViewModel(
@@ -20,8 +21,11 @@ class SearchViewModel(
     val stateLiveData: LiveData<VacanciesState> get() = _stateLiveData
     private val _filtersLiveData = MutableLiveData<Filter>()
     val filtersLiveData: LiveData<Filter> get() = _filtersLiveData
+    private var lastFilter: Filter? = null
+    private var filterChanged: Boolean = false
+    val vacancies = ArrayList<Vacancy>()
     fun getJobs(query: String) {
-        _stateLiveData.postValue(VacanciesState(SearchFragment.CODE_LOADING, null))
+        _stateLiveData.postValue(VacanciesState(true, null, null))
         viewModelScope.launch {
             interactor.getVacancies(query, filtersLiveData.value).collect {
                 _stateLiveData.postValue(it)
@@ -33,6 +37,21 @@ class SearchViewModel(
         viewModelScope.launch {
             filterUseCase.invoke().collect {
                 _filtersLiveData.postValue(it)
+                filterChanged = (it != lastFilter)
+                lastFilter = it
+                cancel()
+            }
+
+        }
+    }
+
+    fun filterChanged(): Boolean = filterChanged
+
+    fun loadFiltersToVar() {
+        if (lastFilter == null) viewModelScope.launch {
+            filterUseCase.invoke().collect {
+                lastFilter = it
+                cancel()
             }
 
         }
