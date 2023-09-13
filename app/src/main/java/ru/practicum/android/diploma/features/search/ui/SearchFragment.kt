@@ -110,9 +110,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun render(state: VacanciesState) {
-//        TODO("Добавить какой-то плейсхолдер")
         when{
-
             state.isLoading -> {
                 binding.jobsFoundLabel.visibility = View.GONE
                 binding.searchLoading.visibility = View.VISIBLE
@@ -120,7 +118,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
 
             !state.errorMessage.isNullOrEmpty() -> {
-                changeVisibilitiesResult(false, state.errorMessage?:"")
+                changeVisibilitiesResult(false, state.errorMessage, true)
             }
 
             else -> {
@@ -152,10 +150,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         if (query.isNotEmpty() && viewModel.filterChanged()) viewModel.getJobs(query)
     }
 
-    private fun changeVisibilitiesResult(success: Boolean, message: String) {
+    private fun changeVisibilitiesResult(success: Boolean, message: String, showPlaceholder: Boolean = false) {
         binding.searchLoading.visibility = View.GONE
         binding.jobsFoundLabel.visibility = View.VISIBLE
         binding.jobsFoundLabel.text = message
+        binding.searchPlaceholder.visibility = if (showPlaceholder) View.VISIBLE else View.GONE
         if (success) {
             binding.searchRecycler.visibility = View.VISIBLE
         } else {
