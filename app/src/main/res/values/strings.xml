@@ -36,4 +36,5 @@
     <string name="something_went_wrong">Что-то пошло не так</string>
     <string name="refresh">Обновить</string>
     <string name="select_application_to_send">"Выберите приложение для отправки"</string>
+    <string name="list_empty">Список пуст</string>
 </resources>

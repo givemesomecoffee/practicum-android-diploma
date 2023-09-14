@@ -18,17 +18,14 @@ import ru.practicum.android.diploma.core.navigation.util.goToScreen
 import ru.practicum.android.diploma.core.utils.debounce
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.features.details.ui.DetailsFragment
-import ru.practicum.android.diploma.features.filter.domain.model.Filter
 import ru.practicum.android.diploma.features.search.domain.models.VacanciesState
 import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.core.ui.vacancies.VacanciesAdapter
+import ru.practicum.android.diploma.features.filter.domain.model.Filter
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
     companion object {
         private const val SEARCH_DELAY = 2000L
-        const val CODE_LOADING = 0
-        const val CODE_NO_INTERNET = -1
-        const val CODE_EMPTY = -2
     }
 
     private var _binding: FragmentSearchBinding? = null
@@ -37,12 +34,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private lateinit var searchDebounce: (String) -> Unit
     private lateinit var adapter: VacanciesAdapter
     private var lastText: String? = ""
-    private val vacancies = ArrayList<Vacancy>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        viewModel.loadFiltersToVar()
         viewModel.stateLiveData.observe(viewLifecycleOwner) {
             render(it)
         }
@@ -64,7 +61,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     )
                 )
             }
-        adapter.vacancies = vacancies
+        adapter.vacancies = viewModel.vacancies
         binding.searchRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.searchRecycler.adapter = adapter
         searchDebounce = debounce(SEARCH_DELAY, lifecycleScope, true) {
@@ -90,7 +87,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private fun changeUISearch(textEmpty: Boolean) {
         if (textEmpty) {
-            vacancies.clear()
+            viewModel.vacancies.clear()
             adapter.notifyDataSetChanged()
             binding.searchRecycler.visibility = View.GONE
             binding.searchPlaceholder.visibility = View.VISIBLE
@@ -113,8 +110,18 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun render(state: VacanciesState) {
-        when (state.code) {
-            200 -> {
+        when{
+            state.isLoading -> {
+                binding.jobsFoundLabel.visibility = View.GONE
+                binding.searchLoading.visibility = View.VISIBLE
+                binding.searchRecycler.visibility = View.GONE
+            }
+
+            !state.errorMessage.isNullOrEmpty() -> {
+                changeVisibilitiesResult(false, state.errorMessage, true)
+            }
+
+            else -> {
                 changeVisibilitiesResult(
                     true,
                     if (!state.items.isNullOrEmpty())
@@ -122,28 +129,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                      else getString(R.string.no_jobs_found)
                 )
                 if (state.items != null) {
-                    vacancies.clear()
-                    vacancies.addAll(state.items)
+                    viewModel.vacancies.clear()
+                    viewModel.vacancies.addAll(state.items)
                     adapter.notifyDataSetChanged()
                 }
-            }
-
-            CODE_LOADING -> {
-                binding.jobsFoundLabel.visibility = View.GONE
-                binding.searchLoading.visibility = View.VISIBLE
-                binding.searchRecycler.visibility = View.GONE
-            }
-
-            CODE_NO_INTERNET -> {
-                changeVisibilitiesResult(false, getString(R.string.no_internet))
-            }
-
-            403 -> {
-                changeVisibilitiesResult(false, getString(R.string.error_403))
-            }
-
-            else -> {
-                changeVisibilitiesResult(false, getString(R.string.error_else, state.code))
             }
         }
     }
@@ -157,12 +146,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         ) binding.filterButton.setImageResource(
             R.drawable.filter_on
         )
+        val query = binding.searchInput.text.toString().trim()
+        if (query.isNotEmpty() && viewModel.filterChanged()) viewModel.getJobs(query)
     }
 
-    private fun changeVisibilitiesResult(success: Boolean, message: String) {
+    private fun changeVisibilitiesResult(success: Boolean, message: String, showPlaceholder: Boolean = false) {
         binding.searchLoading.visibility = View.GONE
         binding.jobsFoundLabel.visibility = View.VISIBLE
         binding.jobsFoundLabel.text = message
+        binding.searchPlaceholder.visibility = if (showPlaceholder) View.VISIBLE else View.GONE
         if (success) {
             binding.searchRecycler.visibility = View.VISIBLE
         } else {

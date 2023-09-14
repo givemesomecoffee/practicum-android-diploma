@@ -13,7 +13,9 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.core.data.db.FavoriteVacanciesRepositoryImpl
+import ru.practicum.android.diploma.core.data.network.ConnectionChecker
 import ru.practicum.android.diploma.core.data.network.NetworkConfig
+import ru.practicum.android.diploma.core.data.network.impl.ConnectionCheckerImpl
 import ru.practicum.android.diploma.core.data.network.interceptor.AuthInterceptor
 
 import ru.practicum.android.diploma.core.data.db.AppDatabase
@@ -29,6 +31,11 @@ val dataModule = module {
 
 
     }
+
+    single<ConnectionChecker>{
+        ConnectionCheckerImpl(androidContext())
+    }
+
     single {
         val clientBuilder = OkHttpClient.Builder()
         clientBuilder.addInterceptor(AuthInterceptor())

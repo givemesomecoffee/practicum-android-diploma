@@ -31,6 +31,18 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="ru.practicum.android.diploma.features.details.ui.DetailsFragment"
-        android:label="DetailsFragment" />
+        android:label="DetailsFragment" >
+        <action
+            android:id="@+id/action_detailsFragment_to_similarVacanciesFragment"
+            app:destination="@id/similarVacanciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/similarVacanciesFragment"
+        android:name="ru.practicum.android.diploma.features.similar.ui.SimilarVacanciesFragment"
+        android:label="SimilarVacanciesFragment" >
+        <action
+            android:id="@+id/action_similarVacanciesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
 </navigation>

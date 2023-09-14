@@ -1,19 +1,27 @@
 package ru.practicum.android.diploma.features.details.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.data.models.Vacancy
+import ru.practicum.android.diploma.core.navigation.ActionScreen
+import ru.practicum.android.diploma.core.navigation.util.goToScreen
 import ru.practicum.android.diploma.databinding.FragmentDetailsBinding
 import ru.practicum.android.diploma.features.details.presentation.DetailsScreenState
 import ru.practicum.android.diploma.features.details.presentation.DetailsViewModel
+import ru.practicum.android.diploma.features.similar.ui.SimilarVacanciesFragment.Companion.SIMILAR_SCREEN_ARG
 
 class DetailsFragment : Fragment() {
 
@@ -39,10 +47,13 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
+            View.GONE
+
         val vacancyId = requireArguments().getString(VACANCY_ID_ARG) ?: ""
         viewModel.getVacancy(vacancyId)
 
-        initListeners()
+        initListeners(vacancyId)
         initObservers()
 
     }
@@ -61,13 +72,34 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun initListeners() {
+    private fun initListeners(vacancyId: String) {
         binding.detailsArrowBack.setOnClickListener {
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
+                View.VISIBLE
             findNavController().navigateUp()
         }
 
         binding.detailsShare.setOnClickListener {
             viewModel.shareVacancy()
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
+                    View.VISIBLE
+
+                findNavController().navigateUp()
+            }
+
+        })
+
+        binding.detailsSimilarVacancies.setOnClickListener {
+            goToScreen(
+                ActionScreen(
+                    R.id.action_detailsFragment_to_similarVacanciesFragment,
+                    bundleOf(SIMILAR_SCREEN_ARG to vacancyId)
+                )
+            )
         }
     }
 
@@ -76,7 +108,8 @@ class DetailsFragment : Fragment() {
 
         binding.detailsVacancyName.text = vacancy.name
         binding.detailsVacancySalary.text =
-            (vacancy.salary?.pretty(requireContext()) ?: resources.getString(R.string.no_salary)).toString()
+            (vacancy.salary?.pretty(requireContext())
+                ?: resources.getString(R.string.no_salary)).toString()
         binding.detailsVacancyCompanyName.text = vacancy.employer.name
 
         if (vacancy.employer.logoUrls != null) {
@@ -112,11 +145,24 @@ class DetailsFragment : Fragment() {
         } else {
             binding.detailsContactPersonValue.text = vacancy.contacts.name
             binding.detailsEmailValue.text = vacancy.contacts.email
-            if (vacancy.contacts.phones.isNullOrEmpty()) {
+
+            binding.detailsEmailValue.setOnClickListener {
+                requireActivity().startActivity(Intent(Intent.ACTION_SENDTO).apply {
+                    data = Uri.parse("mailto:" + binding.detailsEmailValue.text)
+                })
+            }
+
+            if (vacancy.contacts.phones?.isNotEmpty() == true) {
                 binding.detailsPhoneNumberValue.text =
-                    vacancy.contacts.phones?.get(0).toString()
+                    vacancy.contacts.phones[0].toString()
                 binding.detailsPhoneCommentValue.text =
-                    vacancy.contacts.phones?.get(0)?.comment ?: ""
+                    vacancy.contacts.phones[0].comment ?: ""
+
+                binding.detailsPhoneNumberValue.setOnClickListener {
+                    requireActivity().startActivity(Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:" + binding.detailsPhoneNumberValue.text)
+                    })
+                }
             }
         }
 
