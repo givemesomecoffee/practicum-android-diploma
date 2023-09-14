@@ -9,11 +9,11 @@ import ru.practicum.android.diploma.features.details.domain.repository.VacancyRe
 class GetVacancyUseCaseImpl(
     private val vacancyRepository: VacancyRepository
 ) : GetVacancyUseCase {
-    override suspend fun invoke(id: String): Flow<Pair<Vacancy?, Int>> = flow {
+    override suspend fun invoke(id: String): Flow<Vacancy?> = flow {
         vacancyRepository.getVacancy(id).collect { vacancyResponse ->
             when(vacancyResponse.code) {
-                200 -> vacancyResponse.vacancy?.let { emit(Pair(it, 200)) }
-                else -> emit(Pair(null, -1))
+                200 -> vacancyResponse.vacancy?.let { emit(it) }
+                else -> emit(null)
             }
         }
     }

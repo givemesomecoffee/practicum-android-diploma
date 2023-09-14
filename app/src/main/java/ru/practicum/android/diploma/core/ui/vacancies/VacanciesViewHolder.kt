@@ -18,7 +18,7 @@ class VacanciesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(vacancy: Vacancy) {
         name.text = vacancy.name
         employer.text = vacancy.employer.name
-        salary.text = vacancy.salary?.pretty(itemView.context) ?: itemView.context.getString(R.string.no_salary)
+        salary.text = vacancy.salary?.pretty() ?: itemView.context.getString(R.string.no_salary)
         if (vacancy.employer.logoUrls != null)Glide.with(itemView.context)
             .load(
                 when{

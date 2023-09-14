@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.features.details.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -15,12 +13,15 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.core.data.models.Vacancy
 import ru.practicum.android.diploma.core.navigation.ActionScreen
 import ru.practicum.android.diploma.core.navigation.util.goToScreen
+import ru.practicum.android.diploma.core.utils.openEmailApp
+import ru.practicum.android.diploma.core.utils.openPhoneApp
+import ru.practicum.android.diploma.core.utils.shareLink
 import ru.practicum.android.diploma.databinding.FragmentDetailsBinding
 import ru.practicum.android.diploma.features.details.presentation.DetailsScreenState
 import ru.practicum.android.diploma.features.details.presentation.DetailsViewModel
+import ru.practicum.android.diploma.features.details.presentation.models.VacancyUiModel
 import ru.practicum.android.diploma.features.similar.ui.SimilarVacanciesFragment.Companion.SIMILAR_SCREEN_ARG
 
 class DetailsFragment : Fragment() {
@@ -66,7 +67,11 @@ class DetailsFragment : Fragment() {
                 }
 
                 is DetailsScreenState.Error -> {
+                    initError()
+                }
 
+                is DetailsScreenState.Loading -> {
+                    initLoading()
                 }
             }
         }
@@ -80,7 +85,10 @@ class DetailsFragment : Fragment() {
         }
 
         binding.detailsShare.setOnClickListener {
-            viewModel.shareVacancy()
+            val link = viewModel.getVacancyLink()
+            if (link.isNotEmpty()) {
+                requireContext().shareLink(link)
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
@@ -103,69 +111,76 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun initUi(vacancy: Vacancy) {
-        val scheduleAndEmployment = "${vacancy.employment.name}, ${vacancy.schedule?.name}"
+    private fun initUi(vacancy: VacancyUiModel) {
+        binding.detailsMainContainer.visibility = View.VISIBLE
+        binding.detailsLoading.visibility = View.GONE
+        binding.detailsEmptyLogo.visibility = View.GONE
+
+
+        val scheduleAndEmployment = "${vacancy.name}, ${vacancy.scheduleName}"
 
         binding.detailsVacancyName.text = vacancy.name
-        binding.detailsVacancySalary.text =
-            (vacancy.salary?.pretty(requireContext())
-                ?: resources.getString(R.string.no_salary)).toString()
-        binding.detailsVacancyCompanyName.text = vacancy.employer.name
+        binding.detailsVacancySalary.text = vacancy.salary
+        binding.detailsVacancyCompanyName.text = vacancy.employerName
 
-        if (vacancy.employer.logoUrls != null) {
-            Glide.with(binding.root)
-                .load(
-                    vacancy.employer.logoUrls.twoHundredAndForty
-                        ?: vacancy.employer.logoUrls.original
-                )
-                .into(binding.detailsVacancyCompanyLogo)
-        }
 
-        binding.detailsVacancyCompanyCity.text = vacancy.address?.city ?: vacancy.area.name
-        binding.detailsRequiredExperienceValue.text = vacancy.experience?.name
+        Glide.with(binding.root)
+            .load(
+                vacancy.employerLogoUrlsTwoHundredAndForty.ifEmpty { vacancy.employerLogoUrlsOriginal }
+            )
+            .into(binding.detailsVacancyCompanyLogo)
+
+
+        binding.detailsVacancyCompanyCity.text = vacancy.addressCity
+        binding.detailsRequiredExperienceValue.text = vacancy.experienceName
         binding.detailsScheduleAndEmployment.text = scheduleAndEmployment
         binding.detailsVacancyDescriptionValue.text = Html.fromHtml(
             vacancy.description,
             Html.FROM_HTML_MODE_COMPACT
         )
 
-        if (vacancy.keySkills.isNullOrEmpty()) {
+        if (vacancy.keySkills.isEmpty()) {
             binding.detailsKeySkills.visibility = View.GONE
         } else {
             var keySkills = ""
             vacancy.keySkills.forEach { keySkill ->
-                keySkills += "• ${keySkill.name}\n"
+                keySkills += "• ${keySkill}\n"
             }
 
             binding.detailsKeySkillsValue.text = keySkills
         }
 
-        if (vacancy.contacts == null) {
+        if (vacancy.contactsEmail.isEmpty() or vacancy.contactsName.isEmpty()) {
             binding.detailsContactsContainer.visibility = View.GONE
         } else {
-            binding.detailsContactPersonValue.text = vacancy.contacts.name
-            binding.detailsEmailValue.text = vacancy.contacts.email
+            binding.detailsContactPersonValue.text = vacancy.contactsName
+            binding.detailsEmailValue.text = vacancy.contactsEmail
 
             binding.detailsEmailValue.setOnClickListener {
-                requireActivity().startActivity(Intent(Intent.ACTION_SENDTO).apply {
-                    data = Uri.parse("mailto:" + binding.detailsEmailValue.text)
-                })
+                requireContext().openEmailApp(binding.detailsEmailValue.text.toString())
             }
 
-            if (vacancy.contacts.phones?.isNotEmpty() == true) {
-                binding.detailsPhoneNumberValue.text =
-                    vacancy.contacts.phones[0].toString()
-                binding.detailsPhoneCommentValue.text =
-                    vacancy.contacts.phones[0].comment ?: ""
+            if (vacancy.contactPhone.isNotEmpty()) {
+                binding.detailsPhoneNumberValue.text = vacancy.contactPhone
+                binding.detailsPhoneCommentValue.text = vacancy.contactPhoneComment
 
                 binding.detailsPhoneNumberValue.setOnClickListener {
-                    requireActivity().startActivity(Intent(Intent.ACTION_DIAL).apply {
-                        data = Uri.parse("tel:" + binding.detailsPhoneNumberValue.text)
-                    })
+                    requireContext().openPhoneApp(binding.detailsPhoneNumberValue.text.toString())
                 }
             }
         }
+    }
 
+    private fun initLoading() {
+        binding.detailsLoading.visibility = View.VISIBLE
+        binding.detailsMainContainer.visibility = View.GONE
+        binding.detailsEmptyLogo.visibility = View.GONE
+    }
+
+    private fun initError() {
+        binding.detailsEmptyLogo.visibility = View.VISIBLE
+        binding.detailsLoading.visibility = View.GONE
+        binding.detailsMainContainer.visibility = View.GONE
     }
 
     override fun onDestroyView() {
