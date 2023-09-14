@@ -7,15 +7,20 @@ import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import androidx.room.Room
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import ru.practicum.android.diploma.BuildConfig
+import ru.practicum.android.diploma.core.data.db.FavoriteVacanciesRepositoryImpl
 import ru.practicum.android.diploma.core.data.network.ConnectionChecker
 import ru.practicum.android.diploma.core.data.network.NetworkConfig
 import ru.practicum.android.diploma.core.data.network.impl.ConnectionCheckerImpl
 import ru.practicum.android.diploma.core.data.network.interceptor.AuthInterceptor
 
+import ru.practicum.android.diploma.core.data.db.AppDatabase
+import ru.practicum.android.diploma.core.data.db.DbConverter
+import ru.practicum.android.diploma.features.favourites.domain.api.FavoriteVacanciesRepository
 
 val dataModule = module {
     single {
@@ -40,6 +45,17 @@ val dataModule = module {
         clientBuilder.build()
     }
     single { provideRetrofit(get()) }
+
+    factory { DbConverter() }
+
+    single {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "favorite_vacancies.db")
+            .build()
+    }
+
+    single<FavoriteVacanciesRepository> {
+        FavoriteVacanciesRepositoryImpl(get(), get())
+    }
 }
 
 private fun provideRetrofit(client: OkHttpClient): Retrofit {
