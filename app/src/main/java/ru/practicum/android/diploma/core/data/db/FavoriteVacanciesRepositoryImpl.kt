@@ -805,7 +805,7 @@ class FavoriteVacanciesRepositoryImpl(
                             }
                         var searchedPhones: List<Int> = emptyList()
                         for (_searchedPhone in _searchedPhones) {
-                            searchedPhones.plus(_searchedPhone)
+                            searchedPhones += _searchedPhone
                         }
                         searchedPhones = searchedPhones.distinct()
                         for (phoneId in vacancyPhoneIds) {
@@ -827,7 +827,7 @@ class FavoriteVacanciesRepositoryImpl(
                         .map { obj -> dbConverter.jsonStrToListStr(obj) }
                 var searchedKeySkills: List<Int> = emptyList()
                 for (_searchedKeySkill in _searchedKeySkills) {
-                    searchedKeySkills.plus(_searchedKeySkill)
+                    searchedKeySkills += _searchedKeySkill
                 }
                 searchedKeySkills = searchedKeySkills.distinct()
                 for (keySkillId in vacancyKeySkillsIds) {
@@ -843,7 +843,7 @@ class FavoriteVacanciesRepositoryImpl(
                         .map { obj -> dbConverter.jsonStrToListStr(obj) }
                 var searchedProfessionalRoles: List<Int> = emptyList()
                 for (_searchedProfessionalRole in _searchedProfessionalRoles) {
-                    searchedProfessionalRoles.plus(_searchedProfessionalRole)
+                    searchedProfessionalRoles += _searchedProfessionalRole
                 }
                 searchedProfessionalRoles = searchedProfessionalRoles.distinct()
                 for (professionalRoleId in vacancyProfessionalRoleIds) {
