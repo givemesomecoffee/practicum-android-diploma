@@ -33,7 +33,7 @@ class FavoritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         jobNameTextView.text = vacancy.name + ", " + vacancy.address?.city
         jobEmployerTextview.text = vacancy.employer.name
-        jobSalaryTextView.text = vacancy.salary?.pretty(itemView.context)
+        jobSalaryTextView.text = vacancy.salary?.pretty()
             ?: itemView.context.getString(R.string.no_salary)
 
         itemView.setOnClickListener {

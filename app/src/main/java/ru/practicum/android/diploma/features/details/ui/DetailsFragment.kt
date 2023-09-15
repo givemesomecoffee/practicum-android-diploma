@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.features.details.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -53,12 +54,14 @@ class DetailsFragment : Fragment() {
 
         val vacancyId = requireArguments().getString(VACANCY_ID_ARG) ?: ""
         viewModel.getVacancy(vacancyId)
+        viewModel.isFavorite(vacancyId)
 
         initListeners(vacancyId)
         initObservers()
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun initObservers() {
         viewModel.screenState.observe(viewLifecycleOwner) { screeState ->
             when (screeState) {
@@ -75,6 +78,18 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+            val isFavoriteImage = if (isFavorite) resources.getDrawable(
+                R.drawable.heart_filled,
+                null
+            ) else resources.getDrawable(
+                R.drawable.heart_unfilled,
+                null
+            )
+
+            binding.detailsFavourite.setImageDrawable(isFavoriteImage)
+        }
     }
 
     private fun initListeners(vacancyId: String) {
@@ -89,6 +104,10 @@ class DetailsFragment : Fragment() {
             if (link.isNotEmpty()) {
                 requireContext().shareLink(link)
             }
+        }
+
+        binding.detailsFavourite.setOnClickListener {
+            viewModel.addToFavorite()
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
