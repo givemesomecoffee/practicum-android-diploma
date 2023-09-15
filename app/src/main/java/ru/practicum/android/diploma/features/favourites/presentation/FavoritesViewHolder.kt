@@ -31,7 +31,11 @@ class FavoritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .error(R.drawable.offer_placeholder)
                 .into(jobIconImageView)
 
-        jobNameTextView.text = vacancy.name + ", " + vacancy.address?.city
+        jobNameTextView.text = if (vacancy.address != null) {
+            vacancy.name + ", " + vacancy.address.city
+        } else {
+            vacancy.name
+        }
         jobEmployerTextview.text = vacancy.employer.name
         jobSalaryTextView.text = vacancy.salary?.pretty()
             ?: itemView.context.getString(R.string.no_salary)
