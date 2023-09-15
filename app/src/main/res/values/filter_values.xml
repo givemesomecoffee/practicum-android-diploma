@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="workplace">Место работы</string>
+    <string name="industry">Отрасль</string>
+    <string name="awaited_salary">Ожидаемая ЗП</string>
+    <string name="input_sum">Введите сумму</string>
+    <string name="do_not_show_no_salary">Не показывать без ЗП</string>
+    <string name="filter_settings">Настройки фильтрации</string>
+    <string name="workplace_choose">Выбор места работы</string>
+    <string name="filter_country">Страна</string>
+    <string name="filter_region">Регион</string>
+    <string name="filter_choose_country">Выбор страны</string>
+    <string name="filter_choose_region">Выбор региона</string>
+    <string name="filter_choose_industry">Выбор отрасли</string>
+    <string name="filter_insert_region">Введите регион</string>
+    <string name="filter_insert_industry">Введите отрасль</string>
+</resources>

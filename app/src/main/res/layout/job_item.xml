@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/whiteDayBlackNight"
+    android:paddingHorizontal="@dimen/offset_16"
+    android:paddingVertical="@dimen/offset_9">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/jobIcon"
+        android:layout_width="@dimen/offset_48"
+        android:layout_height="@dimen/offset_48"
+        android:scaleType="centerInside"
+        android:src="@drawable/offer_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/rounding_12"
+        app:strokeColor="@color/lightGray"
+        app:strokeWidth="@dimen/offset_2" />
+
+    <TextView
+        android:id="@+id/jobName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_12"
+        style="@style/Primary.Medium.22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/jobIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Android разработчик, Бельмопан" />
+<TextView
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/jobEmployer"
+    app:layout_constraintTop_toBottomOf="@id/jobName"
+    app:layout_constraintStart_toStartOf="@id/jobName"
+    app:layout_constraintEnd_toEndOf="parent"
+    style="@style/Primary.Regular.16"
+    tools:text="Belizean government"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/jobSalary"
+        app:layout_constraintTop_toBottomOf="@id/jobEmployer"
+        app:layout_constraintStart_toStartOf="@id/jobEmployer"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Primary.Regular.16"
+        tools:text="От 100 000$"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

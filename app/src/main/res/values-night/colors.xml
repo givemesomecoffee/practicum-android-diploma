@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blackDayWhiteNight">@color/white</color>
+    <color name="whiteDayBlackNight">@color/black</color>
+    <color name="grayDayWhiteNight">@color/white</color>
+    <color name="lightgrayDayGrayNight">@color/gray</color>
+</resources>

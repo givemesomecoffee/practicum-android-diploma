@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteDayBlackNight">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_tools_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_4"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginEnd="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/details_arrow_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/offset_4"
+                android:padding="@dimen/offset_8"
+                android:src="@drawable/arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/details_title"
+                style="@style/Primary.Medium.22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_4"
+                android:text="@string/vacancy"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/details_arrow_back"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/details_favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/offset_4"
+                android:padding="@dimen/offset_8"
+                android:src="@drawable/heart_unfilled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/details_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/offset_4"
+                android:padding="@dimen/offset_8"
+                android:src="@drawable/share_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/details_favourite"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/details_vacancy_name"
+            style="@style/Primary.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_24"
+            android:layout_marginEnd="@dimen/offset_16"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_tools_bar"
+            tools:text="Android-разработчик" />
+
+        <TextView
+            android:id="@+id/details_vacancy_salary"
+            style="@style/Primary.Medium.22"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_4"
+            android:layout_marginEnd="@dimen/offset_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_vacancy_name"
+            tools:text="от 100 000 ₽" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_vacancy_company"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_24"
+            android:layout_marginEnd="@dimen/offset_16"
+            android:background="@drawable/rounded_vacancy_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_vacancy_salary">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/details_vacancy_company_logo"
+                android:layout_width="@dimen/offset_48"
+                android:layout_height="@dimen/offset_48"
+                android:layout_marginStart="@dimen/offset_16"
+                android:scaleType="centerInside"
+                android:src="@drawable/offer_placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/rounding_12"
+                app:strokeColor="@color/lightGray"
+                app:strokeWidth="@dimen/offset_2" />
+
+            <TextView
+                android:id="@+id/details_vacancy_company_name"
+                style="@style/Primary.Medium.22"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_8"
+                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/details_vacancy_company_logo"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Еда" />
+
+            <TextView
+                android:id="@+id/details_vacancy_company_city"
+                style="@style/Primary.Regular.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_8"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:layout_marginBottom="@dimen/offset_16"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/details_vacancy_company_logo"
+                app:layout_constraintTop_toBottomOf="@id/details_vacancy_company_name"
+                tools:text="Москва" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/details_required_experience"
+            style="@style/Primary.Medium.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_24"
+            android:layout_marginEnd="@dimen/offset_16"
+            android:text="@string/required_experience"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_vacancy_company" />
+
+        <TextView
+            android:id="@+id/details_required_experience_value"
+            style="@style/Primary.Regular.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_4"
+            android:layout_marginEnd="@dimen/offset_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_required_experience"
+            tools:text="От 1 года до 3 лет" />
+
+        <TextView
+            android:id="@+id/details_schedule_and_employment"
+            style="@style/Primary.Regular.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_required_experience_value"
+            tools:text="Полная занятость, Удаленная работа" />
+
+        <TextView
+            android:id="@+id/details_vacancy_description"
+            style="@style/Primary.Medium.22"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_32"
+            android:layout_marginEnd="@dimen/offset_16"
+            android:text="@string/vacancy_description"
+            android:textColor="@color/blackDayWhiteNight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_schedule_and_employment" />
+
+        <TextView
+            android:id="@+id/details_vacancy_description_value"
+            style="@style/Primary.Regular.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginEnd="@dimen/offset_16"
+            android:textColor="@color/blackDayWhiteNight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_vacancy_description"
+            tools:text="@string/vacancy_description" />
+
+        <TextView
+            android:id="@+id/details_key_skills"
+            style="@style/Primary.Medium.22"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_24"
+            android:layout_marginEnd="@dimen/offset_16"
+            android:text="@string/key_skills"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_vacancy_description_value" />
+
+        <TextView
+            android:id="@+id/details_key_skills_value"
+            style="@style/Primary.Regular.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginEnd="@dimen/offset_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_key_skills"
+            tools:text="@string/key_skills" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_contacts_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/offset_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_key_skills_value">
+
+            <TextView
+                android:id="@+id/details_contacts"
+                style="@style/Primary.Medium.22"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:text="@string/contacts"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/details_contact_person"
+                style="@style/Primary.Medium.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:text="@string/contact_person"
+                android:textColor="@color/blackDayWhiteNight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_contacts" />
+
+            <TextView
+                android:id="@+id/details_contact_person_value"
+                style="@style/Primary.Regular.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_4"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:textColor="@color/blackDayWhiteNight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_contact_person"
+                tools:text="Ирина" />
+
+            <TextView
+                android:id="@+id/details_email"
+                style="@style/Primary.Medium.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:text="@string/email"
+                android:textColor="@color/blackDayWhiteNight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_contact_person_value" />
+
+            <TextView
+                android:id="@+id/details_email_value"
+                style="@style/Primary.Regular.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_4"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:textColor="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_email"
+                tools:text="i.lozgkina@yandex.ru" />
+
+            <TextView
+                android:id="@+id/details_phone_number"
+                style="@style/Primary.Medium.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:text="@string/phone_number"
+                android:textColor="@color/blackDayWhiteNight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_email_value" />
+
+            <TextView
+                android:id="@+id/details_phone_number_value"
+                style="@style/Primary.Regular.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_4"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:textColor="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_phone_number"
+                tools:text="+7 (904) 329-27-71" />
+
+            <TextView
+                android:id="@+id/details_phone_comment"
+                style="@style/Primary.Medium.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:text="@string/phone_number"
+                android:textColor="@color/blackDayWhiteNight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_phone_number_value" />
+
+            <TextView
+                android:id="@+id/details_phone_comment_value"
+                style="@style/Primary.Regular.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_4"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:textColor="@color/blackDayWhiteNight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_phone_comment"
+                tools:text="Заполнить анкету по форме можно на нашем сайте" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/details_similar_vacancies"
+            style="@style/Primary.Medium.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_17"
+            android:layout_marginTop="@dimen/offset_24"
+            android:layout_marginEnd="@dimen/offset_17"
+            android:backgroundTint="@color/blue"
+            android:padding="@dimen/offset_20"
+            android:radius="12dp"
+            android:text="@string/similar_vacancies"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/offset_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_contacts_container" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

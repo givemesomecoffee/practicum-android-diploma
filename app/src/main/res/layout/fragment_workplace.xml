@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_primary"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/workplace_choose"
+        app:titleTextAppearance="@style/Primary.Medium.22" />
+
+    <ru.practicum.android.diploma.features.filter.ui.view.TextWithHintAndIcon
+        android:id="@+id/country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/offset_16"
+        app:cell_hint="@string/filter_country"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <ru.practicum.android.diploma.features.filter.ui.view.TextWithHintAndIcon
+        android:id="@+id/region"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cell_hint="@string/filter_region"
+        app:layout_constraintTop_toBottomOf="@id/country" />
+
+    <ru.practicum.android.diploma.core.ui.button.CustomButton
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/offset_16"
+        android:layout_marginBottom="@dimen/offset_24"
+        app:custom_button_title="@string/choose"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
