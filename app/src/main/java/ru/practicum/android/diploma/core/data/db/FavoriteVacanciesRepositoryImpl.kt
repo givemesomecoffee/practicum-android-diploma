@@ -29,7 +29,7 @@ class FavoriteVacanciesRepositoryImpl(
     private val appDatabase: AppDatabase,
     private val dbConverter: DbConverter,
 ) : FavoriteVacanciesRepository {
-    override fun getFavoriteVacancies(requestId: String): Flow<List<Vacancy>> = flow {
+    override suspend fun getFavoriteVacancies(requestId: String): Flow<List<Vacancy>> = flow {
         val vacancyEntities: List<VacancyEntity> = if (requestId == "") {
             appDatabase.vacancyDao().select()
         } else {

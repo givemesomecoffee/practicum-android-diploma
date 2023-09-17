@@ -11,7 +11,7 @@ class FavoritesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var favoriteVacancyClickListener: FavoriteVacancyClickListener =
         FavoriteVacancyClickListener {}
 
-    private var favoriteVacancies: List<Vacancy> = emptyList()
+    private var favoriteVacancies: List<Vacancy> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return FavoritesViewHolder(

@@ -37,7 +37,7 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
     private lateinit var onVacancyClickDebounce: (Vacancy) -> Unit
 
     companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val CLICK_DEBOUNCE_DELAY_MILLIS = 1000L
     }
 
     override fun onCreateView(
@@ -59,7 +59,7 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
         favoritesViewModel.favoritesFragmentControl()
 
         onVacancyClickDebounce =
-            debounce(CLICK_DEBOUNCE_DELAY, viewLifecycleOwner.lifecycleScope, false) { vacancy ->
+            debounce(CLICK_DEBOUNCE_DELAY_MILLIS, viewLifecycleOwner.lifecycleScope, false) { vacancy ->
                 goToScreen(
                     ActionScreen(
                         R.id.action_favouritesFragment_to_detailsFragment,

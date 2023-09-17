@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.data.models.Vacancy
@@ -17,7 +18,7 @@ class FavoritesViewModel(
     fun observeFavoriteFragmentState(): LiveData<FavoriteFragmentState> = favoriteFragmentLiveData
 
     fun favoritesFragmentControl() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val favoriteVacancies: List<Vacancy> =
                 favoriteVacanciesInteractor.getFavoriteVacancies().first()
             if (favoriteVacancies.isEmpty()) {
@@ -27,12 +28,4 @@ class FavoritesViewModel(
             }
         }
     }
-
-    fun removeVacancyFromFavorites(vacancy: Vacancy) {
-        viewModelScope.launch {
-            favoriteVacanciesInteractor.deleteFavoriteVacancies(listOf(vacancy))
-        }
-        favoritesFragmentControl()
-    }
-
 }
