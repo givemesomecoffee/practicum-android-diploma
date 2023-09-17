@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.core.data.models.Vacancy
 class VacanciesAdapter(private val onClickAction: (String) -> Unit) :
     RecyclerView.Adapter<VacanciesViewHolder>() {
 
-    var vacancies = ArrayList<Vacancy>()
+    private var vacancies = ArrayList<Vacancy>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacanciesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.job_item, parent, false)
@@ -27,4 +27,16 @@ class VacanciesAdapter(private val onClickAction: (String) -> Unit) :
             onClickAction.invoke(vacancy.id)
         }
     }
+
+    fun clearItems(){
+        vacancies.clear()
+    }
+
+    fun setItems(items: List<Vacancy>){
+        clearItems()
+        vacancies.addAll(items)
+        this.notifyDataSetChanged()
+    }
+
+
 }

@@ -81,9 +81,7 @@ class SimilarVacanciesFragment : Fragment() {
         binding.similarList.visibility = if (vacancies.isEmpty()) View.GONE else View.VISIBLE
 
 
-        adapter.vacancies.clear()
-        adapter.vacancies.addAll(vacancies)
-        adapter.notifyDataSetChanged()
+        adapter.setItems(vacancies)
 
     }
 }
