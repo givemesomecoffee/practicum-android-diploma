@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.core.data.models.Vacancy
 import ru.practicum.android.diploma.core.navigation.ActionScreen
 import ru.practicum.android.diploma.core.navigation.util.goToScreen
 import ru.practicum.android.diploma.core.utils.debounce
@@ -23,9 +22,9 @@ import ru.practicum.android.diploma.features.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.core.ui.vacancies.VacanciesAdapter
 import ru.practicum.android.diploma.features.filter.domain.model.Filter
 
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class SearchFragment : Fragment() {
     companion object {
-        private const val SEARCH_DELAY = 2000L
+        private const val SEARCH_DELAY_MILLIS = 2000L
     }
 
     private var _binding: FragmentSearchBinding? = null
@@ -61,10 +60,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     )
                 )
             }
-        adapter.vacancies = viewModel.vacancies
         binding.searchRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.searchRecycler.adapter = adapter
-        searchDebounce = debounce(SEARCH_DELAY, lifecycleScope, true) {
+        searchDebounce = debounce(SEARCH_DELAY_MILLIS, lifecycleScope, true) {
             if (it.isNotEmpty()) viewModel.getJobs(it)
         }
         binding.crossSearchInput.setOnClickListener {
@@ -87,8 +85,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private fun changeUISearch(textEmpty: Boolean) {
         if (textEmpty) {
-            viewModel.vacancies.clear()
-            adapter.notifyDataSetChanged()
+            adapter.clearItems()
             binding.searchRecycler.visibility = View.GONE
             binding.searchPlaceholder.visibility = View.VISIBLE
             binding.crossSearchInput.visibility = View.GONE
@@ -129,9 +126,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                      else getString(R.string.no_jobs_found)
                 )
                 if (state.items != null) {
-                    viewModel.vacancies.clear()
-                    viewModel.vacancies.addAll(state.items)
-                    adapter.notifyDataSetChanged()
+                    adapter.setItems(state.items)
                 }
             }
         }

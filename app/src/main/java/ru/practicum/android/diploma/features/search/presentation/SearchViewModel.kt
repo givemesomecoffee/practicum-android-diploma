@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.data.models.Vacancy
@@ -23,10 +24,9 @@ class SearchViewModel(
     val filtersLiveData: LiveData<Filter> get() = _filtersLiveData
     private var lastFilter: Filter? = null
     private var filterChanged: Boolean = false
-    val vacancies = ArrayList<Vacancy>()
     fun getJobs(query: String) {
         _stateLiveData.postValue(VacanciesState(true, null, null))
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             interactor.getVacancies(query, filtersLiveData.value).collect {
                 _stateLiveData.postValue(it)
             }
