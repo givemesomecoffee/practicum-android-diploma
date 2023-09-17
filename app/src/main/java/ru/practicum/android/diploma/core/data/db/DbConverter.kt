@@ -245,7 +245,7 @@ class DbConverter {
             logoUrlsId,
             logoUrls.twoHundredAndForty ?: "",
             logoUrls.ninety ?: "",
-            logoUrls.original
+            logoUrls.original ?: ""
         )
     }
 
@@ -253,7 +253,7 @@ class DbConverter {
         return LogoUrls(
             logoUrlsEntity.twoHundredAndForty.ifEmpty { null },
             logoUrlsEntity.ninety.ifEmpty { null },
-            logoUrlsEntity.original
+            logoUrlsEntity.original.ifEmpty { null }
         )
     }
 

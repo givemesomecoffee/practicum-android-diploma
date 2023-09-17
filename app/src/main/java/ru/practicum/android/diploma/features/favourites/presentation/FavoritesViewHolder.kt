@@ -18,23 +18,32 @@ class FavoritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         vacancy: Vacancy,
         favoriteVacancyClickListener: FavoritesAdapter.FavoriteVacancyClickListener
     ) {
-
-        if (vacancy.employer.logoUrls != null)
+        if (vacancy.employer.logoUrls != null) {
             Glide.with(itemView.context)
                 .load(
                     when {
-                        vacancy.employer.logoUrls.twoHundredAndForty != null -> vacancy.employer.logoUrls.twoHundredAndForty
-                        else -> vacancy.employer.logoUrls.original
+                        !vacancy.employer.logoUrls.twoHundredAndForty.isNullOrEmpty() -> vacancy.employer.logoUrls.twoHundredAndForty
+                        !vacancy.employer.logoUrls.original.isNullOrEmpty() -> vacancy.employer.logoUrls.original
+                        else -> R.drawable.offer_placeholder
                     }
                 )
                 .placeholder(R.drawable.offer_placeholder)
                 .error(R.drawable.offer_placeholder)
                 .into(jobIconImageView)
-
-        jobNameTextView.text = if (vacancy.address != null) {
-            vacancy.name + ", " + vacancy.address.city
         } else {
+            Glide.with(itemView.context)
+                .load(R.drawable.offer_placeholder)
+                .into(jobIconImageView)
+        }
+
+        jobNameTextView.text = if (vacancy.address == null) {
             vacancy.name
+        } else {
+            if (vacancy.address.city != null) {
+                vacancy.name + ", " + vacancy.address.city
+            } else {
+                vacancy.name
+            }
         }
         jobEmployerTextview.text = vacancy.employer.name
         jobSalaryTextView.text = vacancy.salary?.pretty()

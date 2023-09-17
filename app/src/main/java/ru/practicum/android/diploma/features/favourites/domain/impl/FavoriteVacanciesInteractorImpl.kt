@@ -8,7 +8,7 @@ import ru.practicum.android.diploma.features.favourites.domain.api.FavoriteVacan
 class FavoriteVacanciesInteractorImpl(
     private val favoriteVacanciesRepository: FavoriteVacanciesRepository,
 ) : FavoriteVacanciesInteractor {
-    override fun getFavoriteVacancies(requestId: String): Flow<List<Vacancy>> {
+    override suspend fun getFavoriteVacancies(requestId: String): Flow<List<Vacancy>> {
         return favoriteVacanciesRepository.getFavoriteVacancies(requestId)
     }
     override suspend fun insertIntoFavoriteVacancies(vacancies: List<Vacancy>) {
