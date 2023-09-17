@@ -23,7 +23,7 @@ class FavoritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .load(
                     when {
                         !vacancy.employer.logoUrls.twoHundredAndForty.isNullOrEmpty() -> vacancy.employer.logoUrls.twoHundredAndForty
-                        vacancy.employer.logoUrls.original.isNotEmpty() -> vacancy.employer.logoUrls.original
+                        !vacancy.employer.logoUrls.original.isNullOrEmpty() -> vacancy.employer.logoUrls.original
                         else -> R.drawable.offer_placeholder
                     }
                 )

@@ -9,5 +9,5 @@ data class LogoUrls(
     val twoHundredAndForty: String? = null,
     @SerialName("`90`")
     val ninety: String? = null,
-    val original: String
+    val original: String? = null
 )

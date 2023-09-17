@@ -569,7 +569,7 @@ class FavoriteVacanciesRepositoryImpl(
                 vacancyLogoUrlsIds = appDatabase.logoUrlsDao().select(
                     vacancy.employer.logoUrls.twoHundredAndForty ?: "",
                     vacancy.employer.logoUrls.ninety ?: "",
-                    vacancy.employer.logoUrls.original
+                    vacancy.employer.logoUrls.original ?: ""
                 )
             }
 
