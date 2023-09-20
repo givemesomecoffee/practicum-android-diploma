@@ -9,11 +9,13 @@ import ru.practicum.android.diploma.features.details.data.repository.VacancyRepo
 import ru.practicum.android.diploma.features.details.domain.impl.AddToFavoriteUseCaseImpl
 import ru.practicum.android.diploma.features.details.domain.impl.CheckIsFavoriteVacancyUseCaseImpl
 import ru.practicum.android.diploma.features.details.domain.impl.DeleteFromFavoriteUseCaseImpl
+import ru.practicum.android.diploma.features.details.domain.impl.GetFromFavoriteUseCaseImpl
 import ru.practicum.android.diploma.features.details.domain.impl.GetVacancyUseCaseImpl
 import ru.practicum.android.diploma.features.details.domain.repository.VacancyRepository
 import ru.practicum.android.diploma.features.details.domain.usecases.AddToFavoriteUseCase
 import ru.practicum.android.diploma.features.details.domain.usecases.CheckIsFavoriteVacancyUseCase
 import ru.practicum.android.diploma.features.details.domain.usecases.DeleteFromFavoriteUseCase
+import ru.practicum.android.diploma.features.details.domain.usecases.GetFromFavoriteUseCase
 import ru.practicum.android.diploma.features.details.domain.usecases.GetVacancyUseCase
 import ru.practicum.android.diploma.features.details.presentation.DetailsViewModel
 
@@ -23,8 +25,9 @@ val detailsModule = module {
             checkIsFavoriteVacancyUseCase = get(),
             addToFavoriteUseCase = get(),
             deleteFromFavoriteUseCase = get(),
+            getFromFavoriteUseCase = get(),
             getVacancyUseCase = get(),
-            vacancyMapper = get()
+            vacancyMapper = get(),
         )
     }
 
@@ -34,6 +37,10 @@ val detailsModule = module {
 
     single<GetVacancyUseCase> {
         GetVacancyUseCaseImpl(vacancyRepository = get())
+    }
+
+    single<GetFromFavoriteUseCase> {
+        GetFromFavoriteUseCaseImpl(favoriteVacanciesRepository = get())
     }
 
     single<CheckIsFavoriteVacancyUseCase> {

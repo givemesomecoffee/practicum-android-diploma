@@ -53,8 +53,8 @@ class DetailsFragment : Fragment() {
             View.GONE
 
         val vacancyId = requireArguments().getString(VACANCY_ID_ARG) ?: ""
-        viewModel.getVacancy(vacancyId)
         viewModel.isFavorite(vacancyId)
+        viewModel.getVacancy(vacancyId)
 
         initListeners(vacancyId)
         initObservers()
@@ -67,14 +67,17 @@ class DetailsFragment : Fragment() {
             when (screeState) {
                 is DetailsScreenState.Filled -> {
                     initUi(screeState.vacancy)
+                    binding.detailsFavourite.isClickable = true
                 }
 
                 is DetailsScreenState.Error -> {
                     initError()
+                    binding.detailsFavourite.isClickable = false
                 }
 
                 is DetailsScreenState.Loading -> {
                     initLoading()
+                    binding.detailsFavourite.isClickable = false
                 }
             }
         }
