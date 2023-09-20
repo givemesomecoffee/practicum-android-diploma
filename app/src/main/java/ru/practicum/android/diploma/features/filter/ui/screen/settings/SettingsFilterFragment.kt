@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.features.filter.ui.screen.settings
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -37,7 +38,7 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
             viewModel.onEvent(SettingsFilterEvent.WorkPlaceFilter(country, region))
             clearFragmentResult(requestKey)
         }
-        setFragmentResultListener(IndustryFilterResult.requestKey){ requestKey, bundle ->
+        setFragmentResultListener(IndustryFilterResult.requestKey) { requestKey, bundle ->
             val industry = bundle.getParcelableCompat<IndustryResult>(IndustryFilterResult.industry)
             viewModel.onEvent(SettingsFilterEvent.IndustryFilter(industry))
             clearFragmentResult(requestKey)
@@ -49,7 +50,16 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
         super.onViewCreated(view, savedInstanceState)
         binding.run {
             enablePopUp(toolbar)
+            etSalary.setEndIconOnClickListener {
+                etSalary.editText?.text = null
+            }
             etSalary.editText?.doOnTextChanged { text, _, _, _ ->
+                if (text?.toString().isNullOrEmpty()) {
+                    etSalary.endIconDrawable = null
+                } else {
+                    etSalary.endIconDrawable =
+                        ResourcesCompat.getDrawable(resources, R.drawable.cross_icon, null)
+                }
                 viewModel.onEvent(SettingsFilterEvent.SalaryFilter(text.toString().toLongOrNull()))
             }
             filterExcludeNoSalary.setOnCheckedChangeListener { _, checked ->
@@ -73,7 +83,7 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
                 settingsFilterWorkplace.setTitle(filter.location?.toString()) {
                     viewModel.onEvent(SettingsFilterEvent.ResetWorkplace)
                 }
-                settingsFilterIndustry.setTitle(filter.industry?.name){
+                settingsFilterIndustry.setTitle(filter.industry?.name) {
                     viewModel.onEvent(SettingsFilterEvent.ResetIndustry)
                 }
                 if (etSalary.editText?.text.toString() != filter.salary.toString()) {
@@ -103,10 +113,10 @@ class SettingsFilterFragment : Fragment(R.layout.fragment_settings_filter) {
         )
     }
 
-    private fun goToIndustryFilter(industry: Industry?){
+    private fun goToIndustryFilter(industry: Industry?) {
         findNavController().navigate(
             SettingsFilterFragmentDirections.actionSettingsFilterFragmentToIndustryFilterFragment(
-               industry?.toIndustryResult()
+                industry?.toIndustryResult()
             )
         )
     }
